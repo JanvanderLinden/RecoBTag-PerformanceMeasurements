@@ -45,7 +45,7 @@ class JetInfoBranches {
     float Jet_ParticleNetAK4BDisc[nMaxJets_];
     float Jet_ParticleNetAK4CvsLDisc[nMaxJets_];
     float Jet_ParticleNetAK4CvsBDisc[nMaxJets_];
-    float Jet_ParticleNetAK4QcsGDisc[nMaxJets_];
+    float Jet_ParticleNetAK4QvsGDisc[nMaxJets_];
 
     float Jet_ParticleNetAK4B[nMaxJets_];
     float Jet_ParticleNetAK4BB[nMaxJets_];
@@ -751,7 +751,7 @@ class JetInfoBranches {
       if(variableParser.isToBeStored(name+"Jet_DeepVertexG"))   tree->Branch((name+"Jet_DeepVertexG"  ).c_str(), Jet_DeepVertexG,   (name+"Jet_DeepVertexG["+  name+"nJet]/F").c_str() );
 
       if(variableParser.isToBeStored(name+"Jet_ParticleNetAK4BDisc"))    tree->Branch((name+"Jet_ParticleNetAK4BDisc"   ).c_str(), Jet_ParticleNetAK4BDisc,    (name+"Jet_ParticleNetAK4BDisc["+   name+"nJet]/F").c_str() );
-      if(variableParser.isToBeStored(name+"Jet_ParticleNetAK4CvsLDisc")) tree->Branch((name+"Jet_ParticleNetAK4CvsLDisc").c_str(), Jet_ParticleNetAK4CsvLDisc, (name+"Jet_ParticleNetAK4CvsLDisc["+name+"nJet]/F").c_str() );
+      if(variableParser.isToBeStored(name+"Jet_ParticleNetAK4CvsLDisc")) tree->Branch((name+"Jet_ParticleNetAK4CvsLDisc").c_str(), Jet_ParticleNetAK4CvsLDisc, (name+"Jet_ParticleNetAK4CvsLDisc["+name+"nJet]/F").c_str() );
       if(variableParser.isToBeStored(name+"Jet_ParticleNetAK4CvsBDisc")) tree->Branch((name+"Jet_ParticleNetAK4CvsBDisc").c_str(), Jet_ParticleNetAK4CvsBDisc, (name+"Jet_ParticleNetAK4CvsBDisc["+name+"nJet]/F").c_str() );
       if(variableParser.isToBeStored(name+"Jet_ParticleNetAK4QvsGDisc")) tree->Branch((name+"Jet_ParticleNetAK4QvsGDisc").c_str(), Jet_ParticleNetAK4QvsGDisc, (name+"Jet_ParticleNetAK4QvsGDisc["+name+"nJet]/F").c_str() );
       if(variableParser.isToBeStored(name+"Jet_ParticleNetAK4B"))     tree->Branch((name+"Jet_ParticleNetAK4B"    ).c_str(), Jet_ParticleNetAK4B,     (name+"Jet_ParticleNetAK4B["+    name+"nJet]/F").c_str() );

@@ -363,7 +363,7 @@ groupSet = cms.PSet(
       ),
     ),
     cms.PSet(
-      group       = cms.String("JetDeepVertex"),
+      group       = cms.string("JetDeepVertex"),
       store       = cms.bool(False),
       description = cms.string("Jet Deep Vertex Variables"),
       variables   = cms.vstring(
@@ -375,13 +375,13 @@ groupSet = cms.PSet(
       ),
     ),
     cms.PSet(
-      group       = cms.String("JetParticleNetAK4"),
+      group       = cms.string("JetParticleNetAK4"),
       store       = cms.bool(False),
       description = cms.string("Jet Particle Net AK4 Variables"),
       variables   = cms.vstring(
         "Jet_ParticleNetAK4BDisc",
         "Jet_ParticleNetAK4CvsLDisc",
-        "Jet_ParticleNetAK4CsvBDisc",
+        "Jet_ParticleNetAK4CvsBDisc",
         "Jet_ParticleNetAK4QvsGDisc",
         "Jet_ParticleNetAK4B",
         "Jet_ParticleNetAK4BB",

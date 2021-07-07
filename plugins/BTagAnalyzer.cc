@@ -308,6 +308,9 @@ private:
   std::string combinedSVNegBJetTags_;
   std::string combinedSVPosBJetTags_;
 
+  std::string deepVertexJetTags_;
+  std::string particleNetAK4JetTags_;
+
   std::string deepFlavourJetTags_;
   std::string deepFlavourNegJetTags_;
 
@@ -652,6 +655,9 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   combinedSVBJetTags_     = iConfig.getParameter<std::string>("combinedSVBJetTags");
   combinedSVNegBJetTags_  = iConfig.getParameter<std::string>("combinedSVNegBJetTags");
   combinedSVPosBJetTags_  = iConfig.getParameter<std::string>("combinedSVPosBJetTags");
+
+  deepVertexJetTags_ = iConfig.getParameter<std::string>("deepVertexJetTags");
+  particleNetAK4JetTags_ = iConfig.getParameter<std::string>("particleNetAK4JetTags");
 
   deepFlavourJetTags_ = iConfig.getParameter<std::string>("deepFlavourJetTags");
   deepFlavourNegJetTags_ = iConfig.getParameter<std::string>("deepFlavourNegJetTags");
@@ -2710,6 +2716,39 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
 //     float CombinedSvtxN = pjet->bDiscriminator(combinedSVNegBJetTags_.c_str());
 //     float CombinedSvtxP = pjet->bDiscriminator(combinedSVPosBJetTags_.c_str());
 
+    // DeepVertexTagger
+    float DeepVertexB   = -10.;
+    float DeepVertexC   = -10.;
+    float DeepVertexUDS = -10.;
+    float DeepVertexG   = -10.;
+    if(deepVertexJetTags_.size()) {
+        DeepVertexB   = pjet->bDiscriminator((deepVertexJetTags_+":probb"  ).c_str());
+        DeepVertexC   = pjet->bDiscriminator((deepVertexJetTags_+":probc"  ).c_str());
+        DeepVertexUDS = pjet->bDiscriminator((deepVertexJetTags_+":probuds").c_str());
+        DeepVertexG   = pjet->bDiscriminator((deepVertexJetTags_+":probg"  ).c_str());
+    
+    }
+
+    // ParticleNetAK4Tagger
+    float ParticleNetAK4B     = -10.; 
+    float ParticleNetAK4BB    = -10.; 
+    float ParticleNetAK4C     = -10.; 
+    float ParticleNetAK4CC    = -10.; 
+    float ParticleNetAK4UDS   = -10.; 
+    float ParticleNetAK4G     = -10.; 
+    float ParticleNetAK4UNDEF = -10.; 
+    float ParticleNetAK4PU    = -10.; 
+    if(particleNetAK4JetTags_.size()) {
+        ParticleNetAK4B     = pjet->bDiscriminator((particleNetAK4JetTags_+":probb"    ).c_str());
+        ParticleNetAK4BB    = pjet->bDiscriminator((particleNetAK4JetTags_+":probbb"   ).c_str());
+        ParticleNetAK4C     = pjet->bDiscriminator((particleNetAK4JetTags_+":probc"    ).c_str());
+        ParticleNetAK4CC    = pjet->bDiscriminator((particleNetAK4JetTags_+":probcc"   ).c_str());
+        ParticleNetAK4UDS   = pjet->bDiscriminator((particleNetAK4JetTags_+":probuds"  ).c_str());
+        ParticleNetAK4G     = pjet->bDiscriminator((particleNetAK4JetTags_+":probg"    ).c_str());
+        ParticleNetAK4UNDEF = pjet->bDiscriminator((particleNetAK4JetTags_+":probundef").c_str());
+        ParticleNetAK4PU    = pjet->bDiscriminator((particleNetAK4JetTags_+":probpu"   ).c_str());
+    }
+
     float DeepFlavourB    = -10.;
     float DeepFlavourBB   = -10.;
     float DeepFlavourLepB = -10.;
@@ -2837,6 +2876,34 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
     float CvsLPos = pjet->bDiscriminator(CvsLPosCJetTags_.c_str());
 
     // Jet information
+    // DeepVertex discriminators
+    JetInfo[iJetColl].Jet_DeepVertexBDisc[JetInfo[iJetColl].nJet] = (DeepVertexB > -5) ? DeepVertexB : -10;
+
+    // DeepVertex probabilities
+    JetInfo[iJetColl].Jet_DeepVertexB[  JetInfo[iJetColl].nJet] = DeepVertexB;
+    JetInfo[iJetColl].Jet_DeepVertexC[  JetInfo[iJetColl].nJet] = DeepVertexC;
+    JetInfo[iJetColl].Jet_DeepVertexUDS[JetInfo[iJetColl].nJet] = DeepVertexUDS;
+    JetInfo[iJetColl].Jet_DeepVertexG[  JetInfo[iJetColl].nJet] = DeepVertexG;
+ 
+   
+    // ParticleNet discriminators
+    // https://github.com/cms-sw/cmssw/blob/CMSSW_12_0_X/RecoBTag/ONNXRuntime/python/pfParticleNetAK4DiscriminatorsJetTags_cfi.py
+    JetInfo[iJetColl].Jet_ParticleNetAK4BDisc[   JetInfo[iJetColl].nJet] = (ParticleNetAK4B > -5) ? ParticleNetAK4B + ParticleNetAK4BB : -10;
+    JetInfo[iJetColl].Jet_ParticleNetAK4CvsLDisc[JetInfo[iJetColl].nJet] = (ParticleNetAK4B > -5) ? (ParticleNetAK4C+ParticleNetAK4CC)/(ParticleNetAK4C + ParticleNetAK4CC + ParticleNetAK4UDS + ParticleNetAK4G ) : -10;
+    JetInfo[iJetColl].Jet_ParticleNetAK4CvsBDisc[JetInfo[iJetColl].nJet] = (ParticleNetAK4B > -5) ? (ParticleNetAK4C+ParticleNetAK4CC)/(ParticleNetAK4C + ParticleNetAK4CC + ParticleNetAK4B   + ParticleNetAK4BB) : -10;
+    JetInfo[iJetColl].Jet_ParticleNetAK4QvsGDisc[JetInfo[iJetColl].nJet] = (ParticleNetAK4B > -5) ? (ParticleNetAK4UDS)/(ParticleNetAK4UDS + ParticleNetAK4G) : -10;
+
+    // ParticleNet probabilities
+    JetInfo[iJetColl].Jet_ParticleNetAK4B[    JetInfo[iJetColl].nJet] = ParticleNetAK4B;
+    JetInfo[iJetColl].Jet_ParticleNetAK4BB[   JetInfo[iJetColl].nJet] = ParticleNetAK4BB;
+    JetInfo[iJetColl].Jet_ParticleNetAK4C[    JetInfo[iJetColl].nJet] = ParticleNetAK4C;
+    JetInfo[iJetColl].Jet_ParticleNetAK4CC[   JetInfo[iJetColl].nJet] = ParticleNetAK4CC;
+    JetInfo[iJetColl].Jet_ParticleNetAK4UDS[  JetInfo[iJetColl].nJet] = ParticleNetAK4UDS;
+    JetInfo[iJetColl].Jet_ParticleNetAK4G[    JetInfo[iJetColl].nJet] = ParticleNetAK4G;
+    JetInfo[iJetColl].Jet_ParticleNetAK4UNDEF[JetInfo[iJetColl].nJet] = ParticleNetAK4UNDEF;
+    JetInfo[iJetColl].Jet_ParticleNetAK4PU[   JetInfo[iJetColl].nJet] = ParticleNetAK4PU;
+
+
     //DeepFlavour discriminators
     JetInfo[iJetColl].Jet_DeepFlavourBDisc[JetInfo[iJetColl].nJet]     = (DeepFlavourB > -5) ? DeepFlavourB + DeepFlavourBB + DeepFlavourLepB : -10;
     JetInfo[iJetColl].Jet_DeepFlavourCvsLDisc[JetInfo[iJetColl].nJet]  = (DeepFlavourB > -5) ? DeepFlavourC/(DeepFlavourC + DeepFlavourUDS + DeepFlavourG) : -10;

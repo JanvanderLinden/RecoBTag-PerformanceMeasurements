@@ -481,134 +481,150 @@ if options.isReHLT: trigresults = trigresults+'2'
 
 ## b-tag infos
 bTagInfosLegacy = [
-    'impactParameterTagInfos'
-   ,'secondaryVertexTagInfos'
-   ,'inclusiveSecondaryVertexFinderTagInfos'
-   ,'secondaryVertexNegativeTagInfos'
-   ,'inclusiveSecondaryVertexFinderNegativeTagInfos'
-   ,'softPFMuonsTagInfos'
-   ,'softPFElectronsTagInfos'
+    'impactParameterTagInfos',
+    'secondaryVertexTagInfos',
+    'inclusiveSecondaryVertexFinderTagInfos',
+    'secondaryVertexNegativeTagInfos',
+    'inclusiveSecondaryVertexFinderNegativeTagInfos',
+    'softPFMuonsTagInfos',
+    'softPFElectronsTagInfos',
 ]
 bTagInfos = [
-    'pfImpactParameterTagInfos'
-   ,'pfSecondaryVertexTagInfos'
-   ,'pfInclusiveSecondaryVertexFinderTagInfos'
-   ,'pfSecondaryVertexNegativeTagInfos'
-   ,'pfInclusiveSecondaryVertexFinderNegativeTagInfos'
-   ,'softPFMuonsTagInfos'
-   ,'softPFElectronsTagInfos'
-   ,'pfInclusiveSecondaryVertexFinderCvsLTagInfos'
-   ,'pfInclusiveSecondaryVertexFinderNegativeCvsLTagInfos'
-   ,'pfDeepFlavourTagInfos'
+    'pfImpactParameterTagInfos',
+    'pfSecondaryVertexTagInfos',
+    'pfInclusiveSecondaryVertexFinderTagInfos',
+    'pfSecondaryVertexNegativeTagInfos',
+    'pfInclusiveSecondaryVertexFinderNegativeTagInfos',
+    'softPFMuonsTagInfos',
+    'softPFElectronsTagInfos',
+    'pfInclusiveSecondaryVertexFinderCvsLTagInfos',
+    'pfInclusiveSecondaryVertexFinderNegativeCvsLTagInfos',
+    'pfDeepFlavourTagInfos',
 ]
 bTagInfos_noDeepFlavour = bTagInfos[:-1]
 ## b-tag discriminators
 bTagDiscriminatorsLegacy = set([
-    'jetBProbabilityBJetTags'
-   ,'jetProbabilityBJetTags'
-   ,'positiveOnlyJetBProbabilityBJetTags'
-   ,'positiveOnlyJetProbabilityBJetTags'
-   ,'negativeOnlyJetBProbabilityBJetTags'
-   ,'negativeOnlyJetProbabilityBJetTags'
-   ,'trackCountingHighPurBJetTags'
-   ,'trackCountingHighEffBJetTags'
-   ,'negativeTrackCountingHighEffBJetTags'
-   ,'negativeTrackCountingHighPurBJetTags'
-   ,'simpleSecondaryVertexHighEffBJetTags'
-   ,'simpleSecondaryVertexHighPurBJetTags'
-   ,'negativeSimpleSecondaryVertexHighEffBJetTags'
-   ,'negativeSimpleSecondaryVertexHighPurBJetTags'
-   ,'combinedSecondaryVertexV2BJetTags'
-   ,'positiveCombinedSecondaryVertexV2BJetTags'
-   ,'negativeCombinedSecondaryVertexV2BJetTags'
-   ,'combinedInclusiveSecondaryVertexV2BJetTags'
-   ,'positiveCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'negativeCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'softPFMuonBJetTags'
-   ,'positiveSoftPFMuonBJetTags'
-   ,'negativeSoftPFMuonBJetTags'
-   ,'softPFElectronBJetTags'
-   ,'positiveSoftPFElectronBJetTags'
-   ,'negativeSoftPFElectronBJetTags'
-   ,'combinedMVAv2BJetTags'
-   ,'negativeCombinedMVAv2BJetTags'
-   ,'positiveCombinedMVAv2BJetTags'
+    'jetBProbabilityBJetTags',
+    'jetProbabilityBJetTags',
+    'positiveOnlyJetBProbabilityBJetTags',
+    'positiveOnlyJetProbabilityBJetTags',
+    'negativeOnlyJetBProbabilityBJetTags',
+    'negativeOnlyJetProbabilityBJetTags',
+    'trackCountingHighPurBJetTags',
+    'trackCountingHighEffBJetTags',
+    'negativeTrackCountingHighEffBJetTags',
+    'negativeTrackCountingHighPurBJetTags',
+    'simpleSecondaryVertexHighEffBJetTags',
+    'simpleSecondaryVertexHighPurBJetTags',
+    'negativeSimpleSecondaryVertexHighEffBJetTags',
+    'negativeSimpleSecondaryVertexHighPurBJetTags',
+    'combinedSecondaryVertexV2BJetTags',
+    'positiveCombinedSecondaryVertexV2BJetTags',
+    'negativeCombinedSecondaryVertexV2BJetTags',
+    'combinedInclusiveSecondaryVertexV2BJetTags',
+    'positiveCombinedInclusiveSecondaryVertexV2BJetTags',
+    'negativeCombinedInclusiveSecondaryVertexV2BJetTags',
+    'softPFMuonBJetTags',
+    'positiveSoftPFMuonBJetTags',
+    'negativeSoftPFMuonBJetTags',
+    'softPFElectronBJetTags',
+    'positiveSoftPFElectronBJetTags',
+    'negativeSoftPFElectronBJetTags',
+    'combinedMVAv2BJetTags',
+    'negativeCombinedMVAv2BJetTags',
+    'positiveCombinedMVAv2BJetTags',
 ])
 bTagDiscriminators = set([
-    'pfJetBProbabilityBJetTags'
-   ,'pfJetProbabilityBJetTags'
-   ,'pfPositiveOnlyJetBProbabilityBJetTags'
-   ,'pfPositiveOnlyJetProbabilityBJetTags'
-   ,'pfNegativeOnlyJetBProbabilityBJetTags'
-   ,'pfNegativeOnlyJetProbabilityBJetTags'
-   ,'pfTrackCountingHighPurBJetTags'
-   ,'pfTrackCountingHighEffBJetTags'
-   ,'pfNegativeTrackCountingHighPurBJetTags'
-   ,'pfNegativeTrackCountingHighEffBJetTags'
-   ,'pfSimpleSecondaryVertexHighEffBJetTags'
-   ,'pfSimpleSecondaryVertexHighPurBJetTags'
-   ,'pfNegativeSimpleSecondaryVertexHighEffBJetTags'
-   ,'pfNegativeSimpleSecondaryVertexHighPurBJetTags'
-   ,'pfCombinedSecondaryVertexV2BJetTags'
-   ,'pfPositiveCombinedSecondaryVertexV2BJetTags'
-   ,'pfNegativeCombinedSecondaryVertexV2BJetTags'
-   ,'pfCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'pfPositiveCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'pfNegativeCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'softPFMuonBJetTags'
-   ,'positiveSoftPFMuonBJetTags'
-   ,'negativeSoftPFMuonBJetTags'
-   ,'softPFElectronBJetTags'
-   ,'positiveSoftPFElectronBJetTags'
-   ,'negativeSoftPFElectronBJetTags'
-   ,'pfCombinedMVAV2BJetTags'
-   ,'pfNegativeCombinedMVAV2BJetTags'
-   ,'pfPositiveCombinedMVAV2BJetTags'
-   ,'pfCombinedCvsBJetTags'
-   ,'pfNegativeCombinedCvsBJetTags'
-   ,'pfPositiveCombinedCvsBJetTags'
-   ,'pfCombinedCvsLJetTags'
-   ,'pfNegativeCombinedCvsLJetTags'
-   ,'pfPositiveCombinedCvsLJetTags'
+    'pfJetBProbabilityBJetTags',
+    'pfJetProbabilityBJetTags',
+    'pfPositiveOnlyJetBProbabilityBJetTags',
+    'pfPositiveOnlyJetProbabilityBJetTags',
+    'pfNegativeOnlyJetBProbabilityBJetTags',
+    'pfNegativeOnlyJetProbabilityBJetTags',
+    'pfTrackCountingHighPurBJetTags',
+    'pfTrackCountingHighEffBJetTags',
+    'pfNegativeTrackCountingHighPurBJetTags',
+    'pfNegativeTrackCountingHighEffBJetTags',
+    'pfSimpleSecondaryVertexHighEffBJetTags',
+    'pfSimpleSecondaryVertexHighPurBJetTags',
+    'pfNegativeSimpleSecondaryVertexHighEffBJetTags',
+    'pfNegativeSimpleSecondaryVertexHighPurBJetTags',
+    'pfCombinedSecondaryVertexV2BJetTags',
+    'pfPositiveCombinedSecondaryVertexV2BJetTags',
+    'pfNegativeCombinedSecondaryVertexV2BJetTags',
+    'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+    'pfPositiveCombinedInclusiveSecondaryVertexV2BJetTags',
+    'pfNegativeCombinedInclusiveSecondaryVertexV2BJetTags',
+    'softPFMuonBJetTags',
+    'positiveSoftPFMuonBJetTags',
+    'negativeSoftPFMuonBJetTags',
+    'softPFElectronBJetTags',
+    'positiveSoftPFElectronBJetTags',
+    'negativeSoftPFElectronBJetTags',
+    'pfCombinedMVAV2BJetTags',
+    'pfNegativeCombinedMVAV2BJetTags',
+    'pfPositiveCombinedMVAV2BJetTags',
+    'pfCombinedCvsBJetTags',
+    'pfNegativeCombinedCvsBJetTags',
+    'pfPositiveCombinedCvsBJetTags',
+    'pfCombinedCvsLJetTags',
+    'pfNegativeCombinedCvsLJetTags',
+    'pfPositiveCombinedCvsLJetTags',
     # DeepCSV
-  , 'pfDeepCSVJetTags:probudsg'
-  , 'pfDeepCSVJetTags:probb'
-  , 'pfDeepCSVJetTags:probc'
-  , 'pfDeepCSVJetTags:probbb'
-  , 'pfNegativeDeepCSVJetTags:probudsg'
-  , 'pfNegativeDeepCSVJetTags:probb'
-  , 'pfNegativeDeepCSVJetTags:probc'
-  , 'pfNegativeDeepCSVJetTags:probbb'
-  , 'pfPositiveDeepCSVJetTags:probudsg'
-  , 'pfPositiveDeepCSVJetTags:probb'
-  , 'pfPositiveDeepCSVJetTags:probc'
-  , 'pfPositiveDeepCSVJetTags:probbb'
+    'pfDeepCSVJetTags:probudsg',
+    'pfDeepCSVJetTags:probb',
+    'pfDeepCSVJetTags:probc',
+    'pfDeepCSVJetTags:probbb',
+    'pfNegativeDeepCSVJetTags:probudsg',
+    'pfNegativeDeepCSVJetTags:probb',
+    'pfNegativeDeepCSVJetTags:probc',
+    'pfNegativeDeepCSVJetTags:probbb',
+    'pfPositiveDeepCSVJetTags:probudsg',
+    'pfPositiveDeepCSVJetTags:probb',
+    'pfPositiveDeepCSVJetTags:probc',
+    'pfPositiveDeepCSVJetTags:probbb',
     # DeepFlavour
-  , 'pfDeepFlavourJetTags:probb'
-  , 'pfDeepFlavourJetTags:probbb'
-  , 'pfDeepFlavourJetTags:problepb'
-  , 'pfDeepFlavourJetTags:probc'
-  , 'pfDeepFlavourJetTags:probuds'
-  , 'pfDeepFlavourJetTags:probg'
-  , 'pfNegativeDeepFlavourJetTags:probb'
-  , 'pfNegativeDeepFlavourJetTags:probbb'
-  , 'pfNegativeDeepFlavourJetTags:problepb'
-  , 'pfNegativeDeepFlavourJetTags:probc'
-  , 'pfNegativeDeepFlavourJetTags:probuds'
-  , 'pfNegativeDeepFlavourJetTags:probg'
+    'pfDeepFlavourJetTags:probb',
+    'pfDeepFlavourJetTags:probbb',
+    'pfDeepFlavourJetTags:problepb',
+    'pfDeepFlavourJetTags:probc',
+    'pfDeepFlavourJetTags:probuds',
+    'pfDeepFlavourJetTags:probg',
+    'pfNegativeDeepFlavourJetTags:probb',
+    'pfNegativeDeepFlavourJetTags:probbb',
+    'pfNegativeDeepFlavourJetTags:problepb',
+    'pfNegativeDeepFlavourJetTags:probc',
+    'pfNegativeDeepFlavourJetTags:probuds',
+    'pfNegativeDeepFlavourJetTags:probg',
     # DeepFlavour with pruned input
-#   , 'pfDeepFlavourPrunedJetTags:probb'
-#   , 'pfDeepFlavourPrunedJetTags:probbb'
-#   , 'pfDeepFlavourPrunedJetTags:problepb'
-#   , 'pfDeepFlavourPrunedJetTags:probc'
-#   , 'pfDeepFlavourPrunedJetTags:probuds'
-#   , 'pfDeepFlavourPrunedJetTags:probg'
-#   , 'pfNegativeDeepFlavourPrunedJetTags:probb'
-#   , 'pfNegativeDeepFlavourPrunedJetTags:probbb'
-#   , 'pfNegativeDeepFlavourPrunedJetTags:problepb'
-#   , 'pfNegativeDeepFlavourPrunedJetTags:probc'
-#   , 'pfNegativeDeepFlavourPrunedJetTags:probuds'
-#   , 'pfNegativeDeepFlavourPrunedJetTags:probg'
+#    'pfDeepFlavourPrunedJetTags:probb',
+#    'pfDeepFlavourPrunedJetTags:probbb',
+#    'pfDeepFlavourPrunedJetTags:problepb',
+#    'pfDeepFlavourPrunedJetTags:probc',
+#    'pfDeepFlavourPrunedJetTags:probuds',
+#    'pfDeepFlavourPrunedJetTags:probg',
+#    'pfNegativeDeepFlavourPrunedJetTags:probb',
+#    'pfNegativeDeepFlavourPrunedJetTags:probbb',
+#    'pfNegativeDeepFlavourPrunedJetTags:problepb',
+#    'pfNegativeDeepFlavourPrunedJetTags:probc',
+#    'pfNegativeDeepFlavourPrunedJetTags:probuds',
+#    'pfNegativeDeepFlavourPrunedJetTags:probg',
+    # VertexJetTagger
+    # https://github.com/cms-sw/cmssw/blob/CMSSW_10_6_X/RecoBTag/ONNXRuntime/plugins/DeepVertexONNXJetTagsProducer.cc#L111
+    "pfDeepVertexJetTags:probb",
+    "pfDeepVertexJetTags:probc",
+    "pfDeepVertexJetTags:probuds",
+    "pfDeepVertexJetTags:probg",
+    # Particle Net AK4 
+    # https://github.com/cms-sw/cmssw/blob/CMSSW_10_6_X/RecoBTag/ONNXRuntime/python/pfParticleNetAK4_cff.py
+    "pfParticleNetAK4JetTags:probb",
+    "pfParticleNetAK4JetTags:probbb",
+    "pfParticleNetAK4JetTags:probc",
+    "pfParticleNetAK4JetTags:probcc",
+    "pfParticleNetAK4JetTags:probuds",
+    "pfParticleNetAK4JetTags:probg",
+    "pfParticleNetAK4JetTags:probundef",
+    "pfParticleNetAK4JetTags:probpu",
 ])
 
 ## Legacy taggers not supported with MiniAOD

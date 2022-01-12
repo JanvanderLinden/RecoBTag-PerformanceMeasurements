@@ -273,6 +273,7 @@ private:
   bool runSubJets_ ;
   bool allowJetSkipping_ ;
 
+
   edm::EDGetTokenT<GenEventInfoProduct> src_;  // Generator/handronizer module label
   edm::EDGetTokenT<edm::View<reco::Muon>> muonCollectionName_;
   edm::EDGetTokenT<std::vector<pat::Muon>> patMuonCollectionName_;
@@ -289,6 +290,21 @@ private:
   edm::EDGetTokenT<PatJetCollection> JetCollectionTag_;
   std::vector<edm::EDGetTokenT<PatJetCollection>> SubJetCollectionTags_;
   std::vector<std::string> SubJetLabels_;
+
+  // Fragmentation stuff -------------
+  edm::EDGetTokenT<std::vector<reco::GenJet> > genJetsToken_;
+
+  edm::EDGetTokenT<edm::ValueMap<float> > fragCP5BLToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > fragCP5BLupToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > fragCP5BLdownToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > fragCP5PetersonToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > fragCP5PetersonupToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > fragCP5PetersondownToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > semilepbrdownToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > semilepbrupToken_;
+
+  std::vector<std::string> bFragSyst;
+  // ---------------------------------
 
   std::string jetPBJetTags_;
   std::string jetPNegBJetTags_;
@@ -390,6 +406,7 @@ private:
   bool runJetVariables_;
   bool runQuarkVariables_;
   bool runHadronVariables_;
+  bool runFragmentationVariables_;
   bool runGenVariables_;
   bool runPatMuons_;
   bool runTagVariables_;
@@ -577,6 +594,7 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   runJetVariables_ = iConfig.getParameter<bool>("runJetVariables");
   runQuarkVariables_ = iConfig.getParameter<bool>("runQuarkVariables");
   runHadronVariables_ = iConfig.getParameter<bool>("runHadronVariables");
+  runFragmentationVariables_ = iConfig.getParameter<bool>("runFragmentationVariables");
   runGenVariables_ = iConfig.getParameter<bool>("runGenVariables");
   runPatMuons_ = iConfig.getParameter<bool>("runPatMuons");
   runTagVariables_ = iConfig.getParameter<bool>("runTagVariables");
@@ -727,6 +745,40 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   ttbartop = consumes<int>(edm::InputTag("ttbarselectionproducer:topChannel"));
   ttbartoptrig = consumes<int>(edm::InputTag("ttbarselectionproducer:topTrigger"));
   metfilterIntoken = consumes<int>(edm::InputTag("ttbarselectionproducer:topMETFilter"));
+
+  // Fragmentation stuff
+  // initialize b fragmentation weights
+  bFragSyst.push_back("fragCP5BL");
+  bFragSyst.push_back("fragCP5BLup");
+  bFragSyst.push_back("fragCP5BLdown");
+  bFragSyst.push_back("fragCP5Peterson");
+  bFragSyst.push_back("fragCP5Petersonup");
+  bFragSyst.push_back("fragCP5Petersondown");
+  bFragSyst.push_back("semilepbrup");
+  bFragSyst.push_back("semilepbrdown"); 
+  
+  genJetsToken_ = consumes<std::vector<reco::GenJet> >(
+     iConfig.getParameter<edm::InputTag>("particleLevelJets"));
+
+  std::string postfix = "VsPt";
+  fragCP5BLToken_   = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","fragCP5BL"+postfix));
+  fragCP5BLupToken_         = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","fragCP5BLup"+postfix));
+  fragCP5BLdownToken_       = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","fragCP5BLdown"+postfix));
+  fragCP5PetersonToken_     = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","fragCP5Peterson"+postfix));
+  fragCP5PetersonupToken_   = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","fragCP5Petersonup"+postfix));
+  fragCP5PetersondownToken_ = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","fragCP5Petersondown"+postfix));
+  semilepbrupToken_   = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","semilepbrup"));
+  semilepbrdownToken_ = consumes<edm::ValueMap<float> >(
+        edm::InputTag("bfragWgtProducer","semilepbrdown"));
+
+
 
   ///////////////
   // TTree
@@ -919,6 +971,79 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
 	      if(EventInfo.nPU==0) EventInfo.nPU = ipu->getPU_NumInteractions(); // needed in case getPU_zpositions() is empty
       }
     }
+  
+
+  //------------------------------------------------------
+  // Fragmentation stuff
+  //------------------------------------------------------
+  if(runFragmentationVariables_){
+    edm::Handle<std::vector<reco::GenJet> > genJets;
+    edm::Handle<std::vector<reco::GenJet> > altGenJets;
+    // reco jets
+    edm::Handle<std::vector<pat::Jet> > recoJets;
+    edm::Handle<edm::OwnVector<reco::BaseTagInfo> > tagInfo;
+    // frag weights
+    edm::Handle<edm::ValueMap<float> > fragCP5BL;
+    edm::Handle<edm::ValueMap<float> > fragCP5BLup;
+    edm::Handle<edm::ValueMap<float> > fragCP5BLdown;
+    edm::Handle<edm::ValueMap<float> > fragCP5Peterson;
+    edm::Handle<edm::ValueMap<float> > fragCP5Petersonup;
+    edm::Handle<edm::ValueMap<float> > fragCP5Petersondown;
+    edm::Handle<edm::ValueMap<float> > semilepbrup;
+    edm::Handle<edm::ValueMap<float> > semilepbrdown;
+
+    iEvent.getByToken(genJetsToken_, genJets);
+    iEvent.getByToken(fragCP5BLToken_,           fragCP5BL);
+    iEvent.getByToken(fragCP5BLupToken_,         fragCP5BLup);
+    iEvent.getByToken(fragCP5BLdownToken_,       fragCP5BLdown);
+    iEvent.getByToken(fragCP5PetersonToken_,     fragCP5Peterson);
+    iEvent.getByToken(fragCP5PetersonupToken_,   fragCP5Petersonup);
+    iEvent.getByToken(fragCP5PetersondownToken_, fragCP5Petersondown);
+    iEvent.getByToken(semilepbrupToken_,   semilepbrup);
+    iEvent.getByToken(semilepbrdownToken_, semilepbrdown);
+
+    // loop over gen jets
+    for (auto j=genJets->begin(); j!=genJets->end(); ++j)
+    {
+        int i = j-genJets->begin();
+        edm::Ref<std::vector<reco::GenJet> > genJetRef(genJets, j-genJets->begin());
+    }
+
+    float w;
+    std::string weightName;
+    // loop over all weights that are implemented
+    for(unsigned int iW=0; iW<bFragSyst.size(); iW++)
+    {
+        w = 1.0;
+        weightName = bFragSyst.at(iW);
+        // loop over all gen jets
+        for(auto j = genJets->begin(); j != genJets->end(); ++j) {
+
+            edm::Ref<std::vector<reco::GenJet> > genJetRef(genJets, j-genJets->begin());
+
+            // add weights
+            if(weightName=="fragCP5BL")           w *= (*fragCP5BL)           [genJetRef];
+            if(weightName=="fragCP5BLup")         w *= (*fragCP5BLup)         [genJetRef];
+            if(weightName=="fragCP5BLdown")       w *= (*fragCP5BLdown)       [genJetRef];
+            if(weightName=="fragCP5Peterson")     w *= (*fragCP5Peterson)     [genJetRef];
+            if(weightName=="fragCP5Petersonup")   w *= (*fragCP5Petersonup)   [genJetRef];
+            if(weightName=="fragCP5Petersondown") w *= (*fragCP5Petersondown) [genJetRef];
+            if(weightName=="semilepbrup")   w *= (*semilepbrup)  [genJetRef];
+            if(weightName=="semilepbrdown") w *= (*semilepbrdown)[genJetRef];
+
+
+        } // end of gen jet loop
+        if(weightName=="fragCP5BL")           EventInfo.FragWeight_fragCP5BL = w;
+        if(weightName=="fragCP5BLup")         EventInfo.FragWeight_fragCP5BLup = w;
+        if(weightName=="fragCP5BLdown")       EventInfo.FragWeight_fragCP5BLdown = w;
+        if(weightName=="fragCP5Peterson")     EventInfo.FragWeight_fragCP5Peterson = w;
+        if(weightName=="fragCP5Petersonup")   EventInfo.FragWeight_fragCP5Petersonup = w;
+        if(weightName=="fragCP5Petersondown") EventInfo.FragWeight_fragCP5Petersondown = w;
+        if(weightName=="semilepbrup")         EventInfo.FragWeight_semilepbrup = w;
+        if(weightName=="semilepbrdown")       EventInfo.FragWeight_semilepbrdown = w;
+    } // end of bfrag syst loop
+  } // end of Fragmentation variables
+
 
   //------------------------------------------------------
   // generated particles

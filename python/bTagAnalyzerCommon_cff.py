@@ -16,6 +16,7 @@ bTagAnalyzerCommon = cms.PSet(
     runQuarkVariables        = cms.bool(False),
     runHadronVariables       = cms.bool(False),
     runGenVariables          = cms.bool(True),
+    runFragmentationVariables= cms.bool(False),
     runPatMuons              = cms.bool(False),
     runTagVariables          = cms.bool(False),
     runTagVariablesSubJets   = cms.bool(False),
@@ -64,6 +65,9 @@ bTagAnalyzerCommon = cms.PSet(
     distJetAxisSubJets       = cms.double(0.07),
     decayLengthSubJets       = cms.double(5.0),
     deltaRSubJets            = cms.double(0.3),
+    # Fragmentation things
+    particleLevelJets        = cms.InputTag("particleLevel:jets"),
+    # Trigger paths
     TriggerPathNames = cms.vstring(
         # based on https://cmswbm.cern.ch/cmsdb/servlet/HLTSummary?RUN=297050&NAME=/cdaq/physics/Run2017/2e34/v1.1.1/HLT/V2
         # PF Jets

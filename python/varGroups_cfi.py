@@ -885,6 +885,21 @@ groupSet = cms.PSet(
       ),
     ),
     cms.PSet(
+      group       = cms.string("Fragmentation"),
+      store       = cms.bool(False),
+      description = cms.string("Fragmentation Variables"),
+      variables   = cms.vstring(
+        "FragWeight_fragCP5BL",
+        "FragWeight_fragCP5BLup",
+        "FragWeight_fragCP5BLdown",
+        "FragWeight_fragCP5Peterson",
+        "FragWeight_fragCP5Petersonup",
+        "FragWeight_fragCP5Petersondown",
+        "FragWeight_semilepbrup",
+        "FragWeight_semilepbrdown",
+        ),
+    ),
+    cms.PSet(
       group       = cms.string("Caroline"),
       store       = cms.bool(False),
       description = cms.string("TODO"),

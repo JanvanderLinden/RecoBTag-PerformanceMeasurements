@@ -1,1 +1,3 @@
 **.pyc
+test/*.root
+test/*.log

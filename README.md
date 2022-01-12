@@ -1,6 +1,6 @@
 # RecoBTag-PerformanceMeasurements
 
-## Software setup
+## Software setup for Fragmentation studies
 
 ```
 cmsrel CMSSW_10_6_20 
@@ -10,18 +10,25 @@ cmsenv
 for bash
 export CMSSW_GIT_REFERENCE=/cvmfs/cms.cern.ch/cmssw.git.daily
 
-for tcsh
-setenv CMSSW_GIT_REFERENCE /cvmfs/cms.cern.ch/cmssw.git.daily
-
 git cms-init
 
-git clone -b 10_6_X_UL2016_PreliminaryJECs --depth 1 https://github.com/cms-btv-pog/RecoBTag-PerformanceMeasurements.git RecoBTag/PerformanceMeasurements
+git clone -b 10_6_X_fragmentationStudies https://github.com/JanvanderLinden/RecoBTag-PerformanceMeasurements.git RecoBTag/PerformanceMeasurements
 
-scram b -j8
+git clone -b master_106X https://gitlab.cern.ch/vanderli/BFragmentationAnalyzer.git TopQuarkAnalysis/BFragmentationAnalyzer
+
+scram b -j 12
 
 ```
 
-The ntuplizer can be run and configured through ```RecoBTag/PerformanceMeasurements/test/runBTagAnalyzer_cfg.py```.
+The ntuplizer can be run and configured through 
+```
+RecoBTag/PerformanceMeasurements/test/runBTagAnalyzer_cfg.py
+```
+
+To get the fragmentation weights and variables, for example run
+```
+cmsRun runBTagAnalyzer_cfg.py defaults=2016_UltraLegacy_APV maxEvents=500 reportEvery=50 groups="Fragmentation"
+```
 
 NOTE1: due to the structure of the preliminary JECs, there are 2 different "defaults" sets; 
 

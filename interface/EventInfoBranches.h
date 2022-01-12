@@ -135,6 +135,17 @@ class EventInfoBranches {
     int   GenPruned_pdgID[nMaxGenPruned];
     int   GenPruned_mother[nMaxGenPruned];
 
+    // Fragmentation stuff
+    float FragWeight_fragCP5BL;
+    float FragWeight_fragCP5BLup;
+    float FragWeight_fragCP5BLdown;
+    float FragWeight_fragCP5Peterson;
+    float FragWeight_fragCP5Petersonup;
+    float FragWeight_fragCP5Petersondown;
+    float FragWeight_semilepbrup;
+    float FragWeight_semilepbrdown;
+
+    // Tracks
     int   nTrkAll;
     float TrkAll_d0[nMaxTrk_];
     float TrkAll_dz[nMaxTrk_];
@@ -278,6 +289,19 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("GenPruned_pdgID")) tree->Branch("GenPruned_pdgID",  GenPruned_pdgID , "GenPruned_pdgID[nGenPruned]/I");
       if(variableParser.isToBeStored("GenPruned_status")) tree->Branch("GenPruned_status", GenPruned_status, "GenPruned_status[nGenPruned]/I");
       if(variableParser.isToBeStored("GenPruned_mother")) tree->Branch("GenPruned_mother", GenPruned_mother, "GenPruned_mother[nGenPruned]/I");
+
+      // Fragmentation stuff
+      if(variableParser.isToBeStored("FragWeight_fragCP5BL"))           tree->Branch("FragWeight_fragCP5BL",            &FragWeight_fragCP5BL,              "FragWeight_fragCP5BL/F");      
+      if(variableParser.isToBeStored("FragWeight_fragCP5BLup"))         tree->Branch("FragWeight_fragCP5BLup",          &FragWeight_fragCP5BLup,            "FragWeight_fragCP5BLup/F");      
+      if(variableParser.isToBeStored("FragWeight_fragCP5BLdown"))       tree->Branch("FragWeight_fragCP5BLdown",        &FragWeight_fragCP5BLdown,          "FragWeight_fragCP5BLdown/F");      
+      if(variableParser.isToBeStored("FragWeight_fragCP5Peterson"))     tree->Branch("FragWeight_fragCP5Peterson",      &FragWeight_fragCP5Peterson,        "FragWeight_fragCP5Peterson/F");      
+      if(variableParser.isToBeStored("FragWeight_fragCP5Petersonup"))   tree->Branch("FragWeight_fragCP5Petersonup",    &FragWeight_fragCP5Petersonup,      "FragWeight_fragCP5Petersonup/F");      
+      if(variableParser.isToBeStored("FragWeight_fragCP5Petersondown")) tree->Branch("FragWeight_fragCP5Petersondown",  &FragWeight_fragCP5Petersondown,    "FragWeight_fragCP5Petersondown/F");      
+      if(variableParser.isToBeStored("FragWeight_semilepbrup"))         tree->Branch("FragWeight_semilepbrup",          &FragWeight_semilepbrup,            "FragWeight_semilepbrup/F");      
+      if(variableParser.isToBeStored("FragWeight_semilepbrdown"))       tree->Branch("FragWeight_semilepbrdown",        &FragWeight_semilepbrdown,          "FragWeight_semilepbrdown/F");      
+
+
+
 
       if(variableParser.isToBeStored("nGenV0")) tree->Branch("nGenV0",        &nGenV0         ,"nGenV0/I");
       if(variableParser.isToBeStored("GenV0_pT")) tree->Branch("GenV0_pT",        GenV0_pT       ,"GenV0_pT[nGenV0]/F");
@@ -456,6 +480,16 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("GenPruned_pdgID")) tree->SetBranchAddress("GenPruned_pdgID",  GenPruned_pdgID );
       if(variableParser.isToBeStored("GenPruned_status")) tree->SetBranchAddress("GenPruned_status", GenPruned_status);
       if(variableParser.isToBeStored("GenPruned_mother")) tree->SetBranchAddress("GenPruned_mother", GenPruned_mother);
+
+      // Fragmentation stuff
+      if(variableParser.isToBeStored("FragWeight_fragCP5BL"))           tree->SetBranchAddress("FragWeight_fragCP5BL",           &FragWeight_fragCP5BL);
+      if(variableParser.isToBeStored("FragWeight_fragCP5BLup"))         tree->SetBranchAddress("FragWeight_fragCP5BLup",         &FragWeight_fragCP5BLup);
+      if(variableParser.isToBeStored("FragWeight_fragCP5BLdown"))       tree->SetBranchAddress("FragWeight_fragCP5BLdown",       &FragWeight_fragCP5BLdown);
+      if(variableParser.isToBeStored("FragWeight_fragCP5Peterson"))     tree->SetBranchAddress("FragWeight_fragCP5Peterson",     &FragWeight_fragCP5Peterson);
+      if(variableParser.isToBeStored("FragWeight_fragCP5Petersonup"))   tree->SetBranchAddress("FragWeight_fragCP5Petersonup",   &FragWeight_fragCP5Petersonup);
+      if(variableParser.isToBeStored("FragWeight_fragCP5Petersondown")) tree->SetBranchAddress("FragWeight_fragCP5Petersondown", &FragWeight_fragCP5Petersondown);
+      if(variableParser.isToBeStored("FragWeight_semilepbrup"))         tree->SetBranchAddress("FragWeight_semilepbrup",         &FragWeight_semilepbrup);
+      if(variableParser.isToBeStored("FragWeight_semilepbrdown"))       tree->SetBranchAddress("FragWeight_semilepbrdown",       &FragWeight_semilepbrdown);
 
       if(variableParser.isToBeStored("nGenV0")) tree->SetBranchAddress("nGenV0",        &nGenV0         );
       if(variableParser.isToBeStored("GenV0_pT")) tree->SetBranchAddress("GenV0_pT",        GenV0_pT       );

@@ -287,6 +287,10 @@ options.register('runGenVariables', False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     'True if you want to run Gen Variables')
+options.register('runFragmentationVariables', False,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.bool,
+    'True if you want to run Fragmentation Variables')
 options.register('runCSVTagVariables', False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
@@ -1530,6 +1534,23 @@ if options.runFatJets:
         if hasattr(process,'pfCombinedInclusiveSecondaryVertexV2BJetTagsFatPF'+postfix):
             getattr(process,'pfCombinedInclusiveSecondaryVertexV2BJetTagsFatPF'+postfix).jetTagComputer = cms.string('candidateCombinedSecondaryVertexV2ComputerFat')
 
+
+
+
+# Try to include bfragmentation analyzer here
+process.mergedGenParticles = cms.EDProducer("MergedGenParticleProducer",
+    inputPruned = cms.InputTag("prunedGenParticles"),
+    inputPacked = cms.InputTag("packedGenParticles"),
+    )
+from GeneratorInterface.RivetInterface.genParticles2HepMC_cfi import genParticles2HepMC
+process.genParticles2HepMC = genParticles2HepMC.clone(genParticles = cms.InputTag("mergedGenParticles"))
+process.load("GeneratorInterface.RivetInterface.particleLevel_cfi")
+process.particleLevel.excludeNeutrinosFromJetClustering = False
+process.load("TopQuarkAnalysis.BFragmentationAnalyzer.bfragWgtProducer_cfi")
+
+
+
+
 #-------------------------------------
 process.btagana = bTagAnalyzer.clone()
 if options.useLegacyTaggers:
@@ -1589,6 +1610,7 @@ process.btagana.runJetVariables     = options.runJetVariables
 process.btagana.runQuarkVariables   = options.runQuarkVariables
 process.btagana.runHadronVariables  = options.runHadronVariables
 process.btagana.runGenVariables     = options.runGenVariables
+process.btagana.runFragmentationVariables = options.runFragmentationVariables
 process.btagana.runPFElectronVariables = options.runPFElectronVariables
 process.btagana.runPFMuonVariables = options.runPFMuonVariables
 process.btagana.runPatMuons = options.runPatMuons
@@ -1600,6 +1622,7 @@ if options.runOnData:
   process.btagana.runHadronVariables  = False
   process.btagana.runQuarkVariables   = False
   process.btagana.runGenVariables     = False
+  process.btagana.runFragmentationVariables = False
 
 if options.runCTagVariables:
     process.btagana.runEventInfo = True
@@ -1730,7 +1753,11 @@ for mod in process.filters_().itervalues():
     process.tsk.add(mod)
 
 process.p = cms.Path(
-    process.allEvents
+    process.mergedGenParticles
+    * process.genParticles2HepMC
+    * process.particleLevel
+    * process.bfragWgtProducer
+    * process.allEvents
     * process.filtSeq
     * process.selectedEvents
     * process.analyzerSeq,

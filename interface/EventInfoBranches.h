@@ -14,6 +14,7 @@ const UInt_t nMaxGenQuarks = 100;
 const UInt_t nMaxGenV0 = 100;
 const UInt_t nMaxGenPruned = 100;
 const UInt_t nMaxPatMuon = 1000;
+const UInt_t nGenJet_ = 100;
 
 class EventInfoBranches {
 
@@ -144,6 +145,28 @@ class EventInfoBranches {
     float FragWeight_fragCP5Petersondown;
     float FragWeight_semilepbrup;
     float FragWeight_semilepbrdown;
+
+    // GenJets for Fragmentation stuff
+    int nGenJet;
+    float GenJet_Pt[nGenJet_];
+    float GenJet_Eta[nGenJet_];
+    float GenJet_Phi[nGenJet_];
+    int GenJet_ID[nGenJet_];
+
+    float GenJet_fragCP5BL[nGenJet_];
+    float GenJet_fragCP5BLup[nGenJet_];
+    float GenJet_fragCP5BLdown[nGenJet_];
+    float GenJet_fragCP5Peterson[nGenJet_];
+    float GenJet_fragCP5Petersonup[nGenJet_];
+    float GenJet_fragCP5Petersondown[nGenJet_];
+    float GenJet_semilepbrup[nGenJet_];
+    float GenJet_semilepbrdown[nGenJet_];
+
+    float GenJet_leadHadron_Pt[nGenJet_];
+    float GenJet_leadHadron_xb[nGenJet_];
+    int GenJet_leadHadron_ID[nGenJet_];
+    int GenJet_leadHadron_isB[nGenJet_];
+    int GenJet_leadHadron_isC[nGenJet_];
 
     // Tracks
     int   nTrkAll;
@@ -300,7 +323,25 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("FragWeight_semilepbrup"))         tree->Branch("FragWeight_semilepbrup",          &FragWeight_semilepbrup,            "FragWeight_semilepbrup/F");      
       if(variableParser.isToBeStored("FragWeight_semilepbrdown"))       tree->Branch("FragWeight_semilepbrdown",        &FragWeight_semilepbrdown,          "FragWeight_semilepbrdown/F");      
 
-
+      if(variableParser.isToBeStored("nGenJet")) tree->Branch("nGenJet", &nGenJet, "nGenJet/I");
+      if(variableParser.isToBeStored("GenJet_Pt")) tree->Branch("GenJet_Pt", GenJet_Pt, "GenJet_Pt[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_Eta")) tree->Branch("GenJet_Eta", GenJet_Eta, "GenJet_Eta[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_Phi")) tree->Branch("GenJet_Phi", GenJet_Phi, "GenJet_Phi[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_ID")) tree->Branch("GenJet_ID", GenJet_ID, "GenJet_ID[nGenJet]/I");
+      if(variableParser.isToBeStored("GenJet_fragCP5BL")) tree->Branch("GenJet_fragCP5BL", GenJet_fragCP5BL, "GenJet_fragCP5BL[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_fragCP5BLup")) tree->Branch("GenJet_fragCP5BLup", GenJet_fragCP5BLup, "GenJet_fragCP5BLup[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_fragCP5BLdown")) tree->Branch("GenJet_fragCP5BLdown", GenJet_fragCP5BLdown, "GenJet_fragCP5BLdown[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_fragCP5Peterson")) tree->Branch("GenJet_fragCP5Peterson", GenJet_fragCP5Peterson, "GenJet_fragCP5Peterson[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_fragCP5Petersonup")) tree->Branch("GenJet_fragCP5Petersonup", GenJet_fragCP5Petersonup, "GenJet_fragCP5Petersonup[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_fragCP5Petersondown")) tree->Branch("GenJet_fragCP5Petersondown", GenJet_fragCP5Petersondown, "GenJet_fragCP5Petersondown[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_semilepbrup")) tree->Branch("GenJet_semilepbrup", GenJet_semilepbrup, "GenJet_semilepbrup[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_semilepbrdown")) tree->Branch("GenJet_semilepbrdown", GenJet_semilepbrdown, "GenJet_semilepbrdown[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_leadHadron_Pt")) tree->Branch("GenJet_leadHadron_Pt", GenJet_leadHadron_Pt, "GenJet_leadHadron_Pt[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_leadHadron_xb")) tree->Branch("GenJet_leadHadron_xb", GenJet_leadHadron_xb, "GenJet_leadHadron_xb[nGenJet]/F");
+      if(variableParser.isToBeStored("GenJet_leadHadron_ID")) tree->Branch("GenJet_leadHadron_ID", GenJet_leadHadron_ID, "GenJet_leadHadron_ID[nGenJet]/I");
+      if(variableParser.isToBeStored("GenJet_leadHadron_isB")) tree->Branch("GenJet_leadHadron_isB", GenJet_leadHadron_isB, "GenJet_leadHadron_isB[nGenJet]/I");
+      if(variableParser.isToBeStored("GenJet_leadHadron_isC")) tree->Branch("GenJet_leadHadron_isC", GenJet_leadHadron_isC, "GenJet_leadHadron_isC[nGenJet]/I");
+     
 
 
       if(variableParser.isToBeStored("nGenV0")) tree->Branch("nGenV0",        &nGenV0         ,"nGenV0/I");
@@ -490,6 +531,26 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("FragWeight_fragCP5Petersondown")) tree->SetBranchAddress("FragWeight_fragCP5Petersondown", &FragWeight_fragCP5Petersondown);
       if(variableParser.isToBeStored("FragWeight_semilepbrup"))         tree->SetBranchAddress("FragWeight_semilepbrup",         &FragWeight_semilepbrup);
       if(variableParser.isToBeStored("FragWeight_semilepbrdown"))       tree->SetBranchAddress("FragWeight_semilepbrdown",       &FragWeight_semilepbrdown);
+
+      if(variableParser.isToBeStored("nGenJet")) tree->SetBranchAddress("nGenJet", &nGenJet);
+      if(variableParser.isToBeStored("GenJet_Pt")) tree->SetBranchAddress("GenJet_Pt", GenJet_Pt);
+      if(variableParser.isToBeStored("GenJet_Eta")) tree->SetBranchAddress("GenJet_Eta", GenJet_Eta);
+      if(variableParser.isToBeStored("GenJet_Phi")) tree->SetBranchAddress("GenJet_Phi", GenJet_Phi);
+      if(variableParser.isToBeStored("GenJet_ID")) tree->SetBranchAddress("GenJet_ID", GenJet_ID);
+      if(variableParser.isToBeStored("GenJet_fragCP5BL")) tree->SetBranchAddress("GenJet_fragCP5BL", GenJet_fragCP5BL);
+      if(variableParser.isToBeStored("GenJet_fragCP5BLup")) tree->SetBranchAddress("GenJet_fragCP5BLup", GenJet_fragCP5BLup);
+      if(variableParser.isToBeStored("GenJet_fragCP5BLdown")) tree->SetBranchAddress("GenJet_fragCP5BLdown", GenJet_fragCP5BLdown);
+      if(variableParser.isToBeStored("GenJet_fragCP5Peterson")) tree->SetBranchAddress("GenJet_fragCP5Peterson", GenJet_fragCP5Peterson);
+      if(variableParser.isToBeStored("GenJet_fragCP5Petersonup")) tree->SetBranchAddress("GenJet_fragCP5Petersonup", GenJet_fragCP5Petersonup);
+      if(variableParser.isToBeStored("GenJet_fragCP5Petersondown")) tree->SetBranchAddress("GenJet_fragCP5Petersondown", GenJet_fragCP5Petersondown);
+      if(variableParser.isToBeStored("GenJet_semilepbrup")) tree->SetBranchAddress("GenJet_semilepbrup", GenJet_semilepbrup);
+      if(variableParser.isToBeStored("GenJet_semilepbrdown")) tree->SetBranchAddress("GenJet_semilepbrdown", GenJet_semilepbrdown);
+      if(variableParser.isToBeStored("GenJet_leadHadron_Pt")) tree->SetBranchAddress("GenJet_leadHadron_Pt", GenJet_leadHadron_Pt);
+      if(variableParser.isToBeStored("GenJet_leadHadron_xb")) tree->SetBranchAddress("GenJet_leadHadron_xb", GenJet_leadHadron_xb);
+      if(variableParser.isToBeStored("GenJet_leadHadron_ID")) tree->SetBranchAddress("GenJet_leadHadron_ID", GenJet_leadHadron_ID);
+      if(variableParser.isToBeStored("GenJet_leadHadron_isB")) tree->SetBranchAddress("GenJet_leadHadron_isB", GenJet_leadHadron_isB);
+      if(variableParser.isToBeStored("GenJet_leadHadron_isC")) tree->SetBranchAddress("GenJet_leadHadron_isC", GenJet_leadHadron_isC);
+
 
       if(variableParser.isToBeStored("nGenV0")) tree->SetBranchAddress("nGenV0",        &nGenV0         );
       if(variableParser.isToBeStored("GenV0_pT")) tree->SetBranchAddress("GenV0_pT",        GenV0_pT       );

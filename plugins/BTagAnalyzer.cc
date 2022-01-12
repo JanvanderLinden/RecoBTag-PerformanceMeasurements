@@ -134,6 +134,8 @@
 
 #include "RecoBTag/SecondaryVertex/interface/CombinedSVSoftLeptonComputer.h"
 
+#include "TopQuarkAnalysis/BFragmentationAnalyzer/interface/BFragmentationAnalyzerUtils.h"
+
 //
 // constants, enums and typedefs
 //
@@ -303,7 +305,12 @@ private:
   edm::EDGetTokenT<edm::ValueMap<float> > semilepbrdownToken_;
   edm::EDGetTokenT<edm::ValueMap<float> > semilepbrupToken_;
 
+  edm::EDGetTokenT<edm::ValueMap<float> > leadHadronPtToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > leadHadronxbToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > leadHadronPDGIDToken_;
+
   std::vector<std::string> bFragSyst;
+  std::vector<std::string> leadHadFeat;
   // ---------------------------------
 
   std::string jetPBJetTags_;
@@ -757,6 +764,10 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   bFragSyst.push_back("semilepbrup");
   bFragSyst.push_back("semilepbrdown"); 
   
+  leadHadFeat.push_back("leadHadronPt");
+  leadHadFeat.push_back("leadHadronxb");
+  leadHadFeat.push_back("leadHadronPDGID");
+
   genJetsToken_ = consumes<std::vector<reco::GenJet> >(
      iConfig.getParameter<edm::InputTag>("particleLevelJets"));
 
@@ -778,6 +789,12 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   semilepbrdownToken_ = consumes<edm::ValueMap<float> >(
         edm::InputTag("bfragWgtProducer","semilepbrdown"));
 
+  leadHadronPtToken_     = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","leadHadronPt"));   
+  leadHadronxbToken_     = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","leadHadronxb"));   
+  leadHadronPDGIDToken_  = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","leadHadronPDGID"));   
 
 
   ///////////////
@@ -978,10 +995,6 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
   //------------------------------------------------------
   if(runFragmentationVariables_){
     edm::Handle<std::vector<reco::GenJet> > genJets;
-    edm::Handle<std::vector<reco::GenJet> > altGenJets;
-    // reco jets
-    edm::Handle<std::vector<pat::Jet> > recoJets;
-    edm::Handle<edm::OwnVector<reco::BaseTagInfo> > tagInfo;
     // frag weights
     edm::Handle<edm::ValueMap<float> > fragCP5BL;
     edm::Handle<edm::ValueMap<float> > fragCP5BLup;
@@ -991,6 +1004,10 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
     edm::Handle<edm::ValueMap<float> > fragCP5Petersondown;
     edm::Handle<edm::ValueMap<float> > semilepbrup;
     edm::Handle<edm::ValueMap<float> > semilepbrdown;
+
+    edm::Handle<edm::ValueMap<float> > leadHadronPt;
+    edm::Handle<edm::ValueMap<float> > leadHadronxb;
+    edm::Handle<edm::ValueMap<float> > leadHadronPDGID;
 
     iEvent.getByToken(genJetsToken_, genJets);
     iEvent.getByToken(fragCP5BLToken_,           fragCP5BL);
@@ -1002,11 +1019,48 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
     iEvent.getByToken(semilepbrupToken_,   semilepbrup);
     iEvent.getByToken(semilepbrdownToken_, semilepbrdown);
 
+    iEvent.getByToken(leadHadronPtToken_,    leadHadronPt);
+    iEvent.getByToken(leadHadronxbToken_,    leadHadronxb);
+    iEvent.getByToken(leadHadronPDGIDToken_, leadHadronPDGID);
+
+    EventInfo.nGenJet = 0;
     // loop over gen jets
     for (auto j=genJets->begin(); j!=genJets->end(); ++j)
     {
         int i = j-genJets->begin();
         edm::Ref<std::vector<reco::GenJet> > genJetRef(genJets, j-genJets->begin());
+
+        // fill gen jet values in tree
+        EventInfo.GenJet_Pt[EventInfo.nGenJet]  = j->pt();
+        EventInfo.GenJet_Eta[EventInfo.nGenJet] = j->eta();
+        EventInfo.GenJet_Phi[EventInfo.nGenJet] = j->phi();
+        EventInfo.GenJet_ID[EventInfo.nGenJet]  = j->pdgId();
+
+        EventInfo.GenJet_fragCP5BL[EventInfo.nGenJet] = (*fragCP5BL)[genJetRef];
+        EventInfo.GenJet_fragCP5BLup[EventInfo.nGenJet] = (*fragCP5BLup)[genJetRef];
+        EventInfo.GenJet_fragCP5BLdown[EventInfo.nGenJet] = (*fragCP5BLdown)[genJetRef];
+        EventInfo.GenJet_fragCP5Peterson[EventInfo.nGenJet] = (*fragCP5Peterson)[genJetRef];
+        EventInfo.GenJet_fragCP5Petersonup[EventInfo.nGenJet] = (*fragCP5Petersonup)[genJetRef];
+        EventInfo.GenJet_fragCP5Petersondown[EventInfo.nGenJet] = (*fragCP5Petersondown)[genJetRef];
+        EventInfo.GenJet_semilepbrup[EventInfo.nGenJet] = (*semilepbrup)[genJetRef];
+        EventInfo.GenJet_semilepbrdown[EventInfo.nGenJet] = (*semilepbrdown)[genJetRef];
+
+        EventInfo.GenJet_leadHadron_Pt[EventInfo.nGenJet] = (*leadHadronPt)[genJetRef];
+        EventInfo.GenJet_leadHadron_xb[EventInfo.nGenJet] = (*leadHadronxb)[genJetRef];
+        EventInfo.GenJet_leadHadron_ID[EventInfo.nGenJet] = (*leadHadronPDGID)[genJetRef];
+
+        EventInfo.GenJet_leadHadron_isB[EventInfo.nGenJet] = 0;
+        EventInfo.GenJet_leadHadron_isC[EventInfo.nGenJet] = 0;
+        if(IS_BHADRON_PDGID((int)(*leadHadronPDGID)[genJetRef]))
+        {
+            EventInfo.GenJet_leadHadron_isB[EventInfo.nGenJet] = 1;
+        }
+        else if(IS_CHADRON_PDGID((int)(*leadHadronPDGID)[genJetRef]))
+        {
+            EventInfo.GenJet_leadHadron_isC[EventInfo.nGenJet] = 1;
+        }
+        
+        ++EventInfo.nGenJet;
     }
 
     float w;

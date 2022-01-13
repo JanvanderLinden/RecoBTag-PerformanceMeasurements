@@ -1027,7 +1027,6 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
     // loop over gen jets
     for (auto j=genJets->begin(); j!=genJets->end(); ++j)
     {
-        int i = j-genJets->begin();
         edm::Ref<std::vector<reco::GenJet> > genJetRef(genJets, j-genJets->begin());
 
         // fill gen jet values in tree
@@ -2085,6 +2084,66 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
       JetInfo[iJetColl].Jet_residual[JetInfo[iJetColl].nJet] = ( nJECSets>0 ? pjet->pt()/pjet->correctedJet("L3Absolute").pt() : 1. );
       JetInfo[iJetColl].Jet_uncorrpt[JetInfo[iJetColl].nJet] = ( nJECSets>0 ? pjet->correctedJet("Uncorrected").pt() : pjet->pt());
     }
+
+    // Fragmentation related genJet things
+    if(runFragmentationVariables_)
+    {
+        edm::Handle<std::vector<reco::GenJet> > genJets;
+        edm::Handle<edm::ValueMap<float> > leadHadronPt;
+        edm::Handle<edm::ValueMap<float> > leadHadronxb;
+        edm::Handle<edm::ValueMap<float> > leadHadronPDGID;
+
+        iEvent.getByToken(genJetsToken_, genJets);
+        iEvent.getByToken(leadHadronPtToken_,    leadHadronPt);
+        iEvent.getByToken(leadHadronxbToken_,    leadHadronxb);
+        iEvent.getByToken(leadHadronPDGIDToken_, leadHadronPDGID);
+
+        int foundGenJet = 0;
+        for (auto gj = genJets->begin(); gj!=genJets->end(); ++gj)
+        {
+            float dR = ROOT::Math::VectorUtil::DeltaR(pjet->p4(), gj->p4());
+            if(dR < 0.2)
+            {
+                foundGenJet = 1;
+                edm::Ref<std::vector<reco::GenJet> > genJetRef(genJets, gj-genJets->begin());
+            
+                JetInfo[iJetColl].Jet_GenJet_idx[JetInfo[iJetColl].nJet] = gj-genJets->begin();
+                JetInfo[iJetColl].Jet_GenJet_dR[JetInfo[iJetColl].nJet] = dR;
+
+                // fill all the relevant gen jet variables
+                JetInfo[iJetColl].Jet_GenJet_ID[JetInfo[iJetColl].nJet] = gj->pdgId();
+                JetInfo[iJetColl].Jet_GenJet_leadHadron_Pt[JetInfo[iJetColl].nJet] = (*leadHadronPt)[genJetRef];
+                JetInfo[iJetColl].Jet_GenJet_leadHadron_xb[JetInfo[iJetColl].nJet] = (*leadHadronxb)[genJetRef];
+                JetInfo[iJetColl].Jet_GenJet_leadHadron_ID[JetInfo[iJetColl].nJet] = (*leadHadronPDGID)[genJetRef];
+                JetInfo[iJetColl].Jet_GenJet_leadHadron_isB[JetInfo[iJetColl].nJet] = 0;
+                JetInfo[iJetColl].Jet_GenJet_leadHadron_isC[JetInfo[iJetColl].nJet] = 0;
+                if(IS_BHADRON_PDGID((int)(*leadHadronPDGID)[genJetRef]))
+                {
+                    JetInfo[iJetColl].Jet_GenJet_leadHadron_isB[JetInfo[iJetColl].nJet] = 1;
+                }
+                else if(IS_CHADRON_PDGID((int)(*leadHadronPDGID)[genJetRef]))
+                {
+                    JetInfo[iJetColl].Jet_GenJet_leadHadron_isC[JetInfo[iJetColl].nJet] = 1;
+                }
+                break;
+            }
+        }
+        JetInfo[iJetColl].Jet_hasGenJet[JetInfo[iJetColl].nJet] = foundGenJet;
+        if(foundGenJet==0)
+        {
+            JetInfo[iJetColl].Jet_GenJet_idx[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_dR[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_ID[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_leadHadron_Pt[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_leadHadron_xb[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_leadHadron_ID[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_leadHadron_isB[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_leadHadron_isC[JetInfo[iJetColl].nJet] = -1;
+        }
+    } // end of fragmentation variables
+    
+
+
 
     if( runSubJets_ && iJetColl > 0 )
     {
@@ -4170,6 +4229,9 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
         else                  Histos[iJetColl]->hAllFlav_Tagger_Oth->Fill( varpos );
       }
     }
+
+
+
 
     ++numjet;
     ++JetInfo[iJetColl].nJet;

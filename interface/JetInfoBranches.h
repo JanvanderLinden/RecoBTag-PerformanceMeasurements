@@ -36,6 +36,18 @@ class JetInfoBranches {
     float Jet_Mass4N[nMaxJets_];
     float Jet_Mass4P[nMaxJets_];
 
+    // Fragmentation stuff
+    int Jet_GenJet_idx[nMaxJets_];
+    float Jet_GenJet_dR[nMaxJets_];
+    int Jet_GenJet_ID[nMaxJets_];
+    float Jet_GenJet_leadHadron_Pt[nMaxJets_];
+    float Jet_GenJet_leadHadron_xb[nMaxJets_];
+    int Jet_GenJet_leadHadron_ID[nMaxJets_];
+    int Jet_GenJet_leadHadron_isB[nMaxJets_];
+    int Jet_GenJet_leadHadron_isC[nMaxJets_];
+    int Jet_hasGenJet[nMaxJets_];
+
+
     float Jet_DeepFlavourBDisc[nMaxJets_]   ;
     float Jet_DeepFlavourCvsLDisc[nMaxJets_];
     float Jet_DeepFlavourCvsBDisc[nMaxJets_];
@@ -719,6 +731,18 @@ class JetInfoBranches {
       if(variableParser.isToBeStored(name+"Jet_pileup_looseID")) tree->Branch((name+"Jet_pileup_looseID").c_str(),      Jet_pileup_looseID  ,(name+"Jet_pileup_looseID["+name+"nJet]/I").c_str());
       if(variableParser.isToBeStored(name+"Jet_pileup_mediumID")) tree->Branch((name+"Jet_pileup_mediumID").c_str(),      Jet_pileup_mediumID  ,(name+"Jet_pileup_mediumID["+name+"nJet]/I").c_str()); 
       if(variableParser.isToBeStored(name+"Jet_pileup_tightID")) tree->Branch((name+"Jet_pileup_tightID").c_str(),      Jet_pileup_tightID  ,(name+"Jet_pileup_tightID["+name+"nJet]/I").c_str()); 
+    
+      // Fragmentation stuff
+      if(variableParser.isToBeStored(name+"Jet_GenJet_idx")) tree->Branch((name+"Jet_GenJet_idx").c_str(), Jet_GenJet_idx, (name+"Jet_GenJet_idx["+name+"nJet]/I").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_dR")) tree->Branch((name+"Jet_GenJet_dR").c_str(), Jet_GenJet_dR, (name+"Jet_GenJet_dR["+name+"nJet]/F").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_ID")) tree->Branch((name+"Jet_GenJet_ID").c_str(), Jet_GenJet_ID, (name+"Jet_GenJet_ID["+name+"nJet]/I").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_Pt")) tree->Branch((name+"Jet_GenJet_leadHadron_Pt").c_str(), Jet_GenJet_leadHadron_Pt, (name+"Jet_GenJet_leadHadron_Pt["+name+"nJet]/F").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_xb")) tree->Branch((name+"Jet_GenJet_leadHadron_xb").c_str(), Jet_GenJet_leadHadron_xb, (name+"Jet_GenJet_leadHadron_xb["+name+"nJet]/F").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_ID")) tree->Branch((name+"Jet_GenJet_leadHadron_ID").c_str(), Jet_GenJet_leadHadron_ID, (name+"Jet_GenJet_leadHadron_ID["+name+"nJet]/I").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_isB")) tree->Branch((name+"Jet_GenJet_leadHadron_isB").c_str(), Jet_GenJet_leadHadron_isB, (name+"Jet_GenJet_leadHadron_isB["+name+"nJet]/I").c_str());
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_isC")) tree->Branch((name+"Jet_GenJet_leadHadron_isC").c_str(), Jet_GenJet_leadHadron_isC, (name+"Jet_GenJet_leadHadron_isC["+name+"nJet]/I").c_str());
+      if(variableParser.isToBeStored(name+"Jet_hasGenJet")) tree->Branch((name+"Jet_hasGenJet").c_str(), Jet_hasGenJet, (name+"Jet_hasGenJet["+name+"nJet]/I").c_str());
+
 
       //test variables for AK4 jets: clean up in the future
       if(variableParser.isToBeStored(name+"Jet_trackSip2dSig_AboveBottom_0")) tree->Branch((name+"Jet_trackSip2dSig_AboveBottom_0").c_str(),     Jet_trackSip2dSig_AboveBottom_0     ,(name+"Jet_trackSip2dSig_AboveBottom_0["+name+"nJet]/F").c_str()            );
@@ -1389,6 +1413,17 @@ class JetInfoBranches {
       if(variableParser.isToBeStored(name+"Jet_pileup_looseID")) tree->SetBranchAddress((name+"Jet_pileup_looseID").c_str(),      Jet_pileup_looseID  );
       if(variableParser.isToBeStored(name+"Jet_pileup_mediumID")) tree->SetBranchAddress((name+"Jet_pileup_mediumID").c_str(),      Jet_pileup_mediumID  );
       if(variableParser.isToBeStored(name+"Jet_pileup_tightID")) tree->SetBranchAddress((name+"Jet_pileup_tightID").c_str(),      Jet_pileup_tightID  );
+
+      // Fragmentation stuff
+      if(variableParser.isToBeStored(name+"Jet_GenJet_idx")) tree->SetBranchAddress((name+"Jet_GenJet_idx").c_str(), Jet_GenJet_idx);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_dR")) tree->SetBranchAddress((name+"Jet_GenJet_dR").c_str(), Jet_GenJet_dR);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_ID")) tree->SetBranchAddress((name+"Jet_GenJet_ID").c_str(), Jet_GenJet_ID);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_Pt")) tree->SetBranchAddress((name+"Jet_GenJet_leadHadron_Pt").c_str(), Jet_GenJet_leadHadron_Pt);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_xb")) tree->SetBranchAddress((name+"Jet_GenJet_leadHadron_xb").c_str(), Jet_GenJet_leadHadron_xb);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_ID")) tree->SetBranchAddress((name+"Jet_GenJet_leadHadron_ID").c_str(), Jet_GenJet_leadHadron_ID);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_isB")) tree->SetBranchAddress((name+"Jet_GenJet_leadHadron_isB").c_str(), Jet_GenJet_leadHadron_isB);
+      if(variableParser.isToBeStored(name+"Jet_GenJet_leadHadron_isC")) tree->SetBranchAddress((name+"Jet_GenJet_leadHadron_isC").c_str(), Jet_GenJet_leadHadron_isC);
+      if(variableParser.isToBeStored(name+"Jet_hasGenJet")) tree->SetBranchAddress((name+"Jet_hasGenJet").c_str(), Jet_hasGenJet);
 
       //test variables for AK4 jets: clean up in the future
       if(variableParser.isToBeStored(name+"Jet_trackSip2dSig_AboveBottom_0")) tree->SetBranchAddress((name+"Jet_trackSip2dSig_AboveBottom_0").c_str(),     Jet_trackSip2dSig_AboveBottom_0                 );

@@ -219,6 +219,57 @@ class EventInfoBranches {
     float ttbar_w[1200];
     float ttbar_ptweight;
 
+    int HLT_BTagMu_DiJet20_Mu5_vX;
+    int HLT_BTagMu_DiJet20_Mu5_vX_prescale;
+    int HLT_BTagMu_DiJet40_Mu5_vX;
+    int HLT_BTagMu_DiJet40_Mu5_vX_prescale;
+    int HLT_BTagMu_DiJet70_Mu5_vX;
+    int HLT_BTagMu_DiJet70_Mu5_vX_prescale;
+    int HLT_BTagMu_DiJet110_Mu5_vX;
+    int HLT_BTagMu_DiJet110_Mu5_vX_prescale;
+    int HLT_BTagMu_DiJet170_Mu5_vX;
+    int HLT_BTagMu_DiJet170_Mu5_vX_prescale;
+    int HLT_BTagMu_Jet300_Mu5_vX;
+    int HLT_BTagMu_Jet300_Mu5_vX_prescale;
+    int HLT_BTagMu_AK4DiJet20_Mu5_vX;
+    int HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale;
+    int HLT_BTagMu_AK4DiJet40_Mu5_vX;
+    int HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale;
+    int HLT_BTagMu_AK4DiJet70_Mu5_vX;
+    int HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale;
+    int HLT_BTagMu_AK4DiJet110_Mu5_vX;
+    int HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale;
+    int HLT_BTagMu_AK4DiJet170_Mu5_vX;
+    int HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale;
+    int HLT_BTagMu_AK4Jet300_Mu5_vX;
+    int HLT_BTagMu_AK4Jet300_Mu5_vX_prescale;
+    int HLT_BTagMu_AK8DiJet170_Mu5_vX;
+    int HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale;
+    int HLT_BTagMu_AK8Jet300_Mu5_vX;
+    int HLT_BTagMu_AK8Jet300_Mu5_vX_prescale;
+    int HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX;
+    int HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale;
+    int HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX;
+    int HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale;
+    int HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX;
+    int HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale;
+    int HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX;
+    int HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale;
+    int HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX;
+    int HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale;
+    int HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX;
+    int HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale;
+    int HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX;
+    int HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale;
+    int HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX;
+    int HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale;
+    int HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX;
+    int HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale;
+    int HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX;
+    int HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale;
+    int HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX;
+    int HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale;
+
 
     void RegisterBranches(TTree *tree, VariableParser variableParser){
       if(variableParser.isToBeStored("nBitTrigger")) tree->Branch("nBitTrigger", &nBitTrigger,  "nBitTrigger/I");
@@ -427,6 +478,59 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("PatMuon_IPsig")) tree->Branch("PatMuon_IPsig", PatMuon_IPsig, "PatMuon_IPsig[nPatMuon]/F");
       if(variableParser.isToBeStored("PatMuon_IP2D")) tree->Branch("PatMuon_IP2D", PatMuon_IP2D, "PatMuon_IP2D[nPatMuon]/F");
       if(variableParser.isToBeStored("PatMuon_IP2Dsig")) tree->Branch("PatMuon_IP2Dsig", PatMuon_IP2Dsig, "PatMuon_IP2Dsig[nPatMuon]/F");
+
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet20_Mu5_vX")) tree->Branch("HLT_BTagMu_DiJet20_Mu5_vX", &HLT_BTagMu_DiJet20_Mu5_vX, "HLT_BTagMu_DiJet20_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet20_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_DiJet20_Mu5_vX_prescale", &HLT_BTagMu_DiJet20_Mu5_vX_prescale, "HLT_BTagMu_DiJet20_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet40_Mu5_vX")) tree->Branch("HLT_BTagMu_DiJet40_Mu5_vX", &HLT_BTagMu_DiJet40_Mu5_vX, "HLT_BTagMu_DiJet40_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet40_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_DiJet40_Mu5_vX_prescale", &HLT_BTagMu_DiJet40_Mu5_vX_prescale, "HLT_BTagMu_DiJet40_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet70_Mu5_vX")) tree->Branch("HLT_BTagMu_DiJet70_Mu5_vX", &HLT_BTagMu_DiJet70_Mu5_vX, "HLT_BTagMu_DiJet70_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet70_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_DiJet70_Mu5_vX_prescale", &HLT_BTagMu_DiJet70_Mu5_vX_prescale, "HLT_BTagMu_DiJet70_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet110_Mu5_vX")) tree->Branch("HLT_BTagMu_DiJet110_Mu5_vX", &HLT_BTagMu_DiJet110_Mu5_vX, "HLT_BTagMu_DiJet110_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet110_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_DiJet110_Mu5_vX_prescale", &HLT_BTagMu_DiJet110_Mu5_vX_prescale, "HLT_BTagMu_DiJet110_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet170_Mu5_vX")) tree->Branch("HLT_BTagMu_DiJet170_Mu5_vX", &HLT_BTagMu_DiJet170_Mu5_vX, "HLT_BTagMu_DiJet170_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet170_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_DiJet170_Mu5_vX_prescale", &HLT_BTagMu_DiJet170_Mu5_vX_prescale, "HLT_BTagMu_DiJet170_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_Jet300_Mu5_vX")) tree->Branch("HLT_BTagMu_Jet300_Mu5_vX", &HLT_BTagMu_Jet300_Mu5_vX, "HLT_BTagMu_Jet300_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_Jet300_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_Jet300_Mu5_vX_prescale", &HLT_BTagMu_Jet300_Mu5_vX_prescale, "HLT_BTagMu_Jet300_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet20_Mu5_vX")) tree->Branch("HLT_BTagMu_AK4DiJet20_Mu5_vX", &HLT_BTagMu_AK4DiJet20_Mu5_vX, "HLT_BTagMu_AK4DiJet20_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale, "HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet40_Mu5_vX")) tree->Branch("HLT_BTagMu_AK4DiJet40_Mu5_vX", &HLT_BTagMu_AK4DiJet40_Mu5_vX, "HLT_BTagMu_AK4DiJet40_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale, "HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet70_Mu5_vX")) tree->Branch("HLT_BTagMu_AK4DiJet70_Mu5_vX", &HLT_BTagMu_AK4DiJet70_Mu5_vX, "HLT_BTagMu_AK4DiJet70_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale, "HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet110_Mu5_vX")) tree->Branch("HLT_BTagMu_AK4DiJet110_Mu5_vX", &HLT_BTagMu_AK4DiJet110_Mu5_vX, "HLT_BTagMu_AK4DiJet110_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale, "HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet170_Mu5_vX")) tree->Branch("HLT_BTagMu_AK4DiJet170_Mu5_vX", &HLT_BTagMu_AK4DiJet170_Mu5_vX, "HLT_BTagMu_AK4DiJet170_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale, "HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4Jet300_Mu5_vX")) tree->Branch("HLT_BTagMu_AK4Jet300_Mu5_vX", &HLT_BTagMu_AK4Jet300_Mu5_vX, "HLT_BTagMu_AK4Jet300_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4Jet300_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK4Jet300_Mu5_vX_prescale", &HLT_BTagMu_AK4Jet300_Mu5_vX_prescale, "HLT_BTagMu_AK4Jet300_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8DiJet170_Mu5_vX")) tree->Branch("HLT_BTagMu_AK8DiJet170_Mu5_vX", &HLT_BTagMu_AK8DiJet170_Mu5_vX, "HLT_BTagMu_AK8DiJet170_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale", &HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale, "HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8Jet300_Mu5_vX")) tree->Branch("HLT_BTagMu_AK8Jet300_Mu5_vX", &HLT_BTagMu_AK8Jet300_Mu5_vX, "HLT_BTagMu_AK8Jet300_Mu5_vX/I");
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8Jet300_Mu5_vX_prescale")) tree->Branch("HLT_BTagMu_AK8Jet300_Mu5_vX_prescale", &HLT_BTagMu_AK8Jet300_Mu5_vX_prescale, "HLT_BTagMu_AK8Jet300_Mu5_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX")) tree->Branch("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale")) tree->Branch("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX")) tree->Branch("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale")) tree->Branch("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX")) tree->Branch("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale")) tree->Branch("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->Branch("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX/I");
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->Branch("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX")) tree->Branch("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX/I");
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->Branch("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX")) tree->Branch("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX, "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->Branch("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale, "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX")) tree->Branch("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX, "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->Branch("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale, "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX")) tree->Branch("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX, "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->Branch("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale, "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->Branch("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX, "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->Branch("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale, "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->Branch("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX, "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->Branch("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale, "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale/I");
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->Branch("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX, "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX/I");
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->Branch("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale, "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale/I");
+
+
     }
 
     void ReadBranches(TTree *tree, VariableParser variableParser){
@@ -635,6 +739,58 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("PatMuon_IPsig")) tree->SetBranchAddress("PatMuon_IPsig", PatMuon_IPsig);
       if(variableParser.isToBeStored("PatMuon_IP2D")) tree->SetBranchAddress("PatMuon_IP2D", PatMuon_IP2D);
       if(variableParser.isToBeStored("PatMuon_IP2Dsig")) tree->SetBranchAddress("PatMuon_IP2Dsig", PatMuon_IP2Dsig);
+
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet20_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_DiJet20_Mu5_vX", &HLT_BTagMu_DiJet20_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet20_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_DiJet20_Mu5_vX_prescale", &HLT_BTagMu_DiJet20_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet40_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_DiJet40_Mu5_vX", &HLT_BTagMu_DiJet40_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet40_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_DiJet40_Mu5_vX_prescale", &HLT_BTagMu_DiJet40_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet70_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_DiJet70_Mu5_vX", &HLT_BTagMu_DiJet70_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet70_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_DiJet70_Mu5_vX_prescale", &HLT_BTagMu_DiJet70_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet110_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_DiJet110_Mu5_vX", &HLT_BTagMu_DiJet110_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet110_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_DiJet110_Mu5_vX_prescale", &HLT_BTagMu_DiJet110_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet170_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_DiJet170_Mu5_vX", &HLT_BTagMu_DiJet170_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_DiJet170_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_DiJet170_Mu5_vX_prescale", &HLT_BTagMu_DiJet170_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_Jet300_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_Jet300_Mu5_vX", &HLT_BTagMu_Jet300_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_Jet300_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_Jet300_Mu5_vX_prescale", &HLT_BTagMu_Jet300_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet20_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet20_Mu5_vX", &HLT_BTagMu_AK4DiJet20_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet40_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet40_Mu5_vX", &HLT_BTagMu_AK4DiJet40_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet70_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet70_Mu5_vX", &HLT_BTagMu_AK4DiJet70_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet110_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet110_Mu5_vX", &HLT_BTagMu_AK4DiJet110_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet170_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet170_Mu5_vX", &HLT_BTagMu_AK4DiJet170_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale", &HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4Jet300_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK4Jet300_Mu5_vX", &HLT_BTagMu_AK4Jet300_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK4Jet300_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK4Jet300_Mu5_vX_prescale", &HLT_BTagMu_AK4Jet300_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8DiJet170_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK8DiJet170_Mu5_vX", &HLT_BTagMu_AK8DiJet170_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale", &HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8Jet300_Mu5_vX")) tree->SetBranchAddress("HLT_BTagMu_AK8Jet300_Mu5_vX", &HLT_BTagMu_AK8Jet300_Mu5_vX);
+      if(variableParser.isToBeStored("HLT_BTagMu_AK8Jet300_Mu5_vX_prescale")) tree->SetBranchAddress("HLT_BTagMu_AK8Jet300_Mu5_vX_prescale", &HLT_BTagMu_AK8Jet300_Mu5_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX")) tree->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX);
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale")) tree->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX")) tree->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX);
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale")) tree->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX")) tree->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX);
+      if(variableParser.isToBeStored("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale")) tree->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->SetBranchAddress("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX);
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->SetBranchAddress("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX")) tree->SetBranchAddress("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX);
+      if(variableParser.isToBeStored("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->SetBranchAddress("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX")) tree->SetBranchAddress("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX);
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->SetBranchAddress("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX")) tree->SetBranchAddress("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX);
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->SetBranchAddress("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX")) tree->SetBranchAddress("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX);
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale")) tree->SetBranchAddress("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->SetBranchAddress("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX);
+      if(variableParser.isToBeStored("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->SetBranchAddress("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->SetBranchAddress("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX);
+      if(variableParser.isToBeStored("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->SetBranchAddress("HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale);
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX")) tree->SetBranchAddress("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX);
+      if(variableParser.isToBeStored("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale")) tree->SetBranchAddress("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale", &HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale);
+
     }
 
 };

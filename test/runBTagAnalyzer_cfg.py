@@ -291,6 +291,14 @@ options.register('runFragmentationVariables', False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     'True if you want to run Fragmentation Variables')
+options.register('runFragQCDTriggers', False,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.bool,
+    'True if you want to run Fragmentation QCD Triggers')
+options.register('runFragTTbarTriggers', False,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.bool,
+    'True if you want to run Fragmentation TTbar Triggers')
 options.register('runCSVTagVariables', False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
@@ -353,6 +361,11 @@ options.register(
     VarParsing.varType.int,
     "skip N events"
 )
+options.register(
+    'fragTriggerSet', '',
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.string,
+    'set trigger set for fragmentation studies as "QCD" or "TTbar"')
 
 ## 'maxEvents' is already registered by the Framework, changing default value
 options.setDefault('maxEvents', -1)
@@ -382,6 +395,20 @@ if options.defaults:
 			if key == 'inputFiles' and options.inputFiles: continue #skip input files that for some reason are never considered set
 			print 'setting default option for', key
 			setattr(options, key, value)
+
+if options.fragTriggerSet == "":
+    triggerSetup = "TriggerPathNames"
+elif options.fragTriggerSet == "QCD":
+    options.groups.append("FragQCDTriggers")
+    triggerSetup = "FragQCDTriggerPathNames"
+elif options.fragTriggerSet == "TTbar":
+    options.groups.append("FragTTbarTriggers")
+    triggerSetup = "FragTTbarTriggerPathNames"
+else:
+    print("ERROR, invalid fragTriggerSet {}".format(options.fragTriggerSet))
+    exit()
+print("using triggerSetup {}".format(triggerSetup))
+
 
 from RecoBTag.PerformanceMeasurements.BTagAnalyzer_cff import *
 btagana_tmp = bTagAnalyzer.clone()
@@ -479,6 +506,7 @@ if not options.usePuppi and options.usePuppiForFatJets:
     jetCorrectionsSubJets = ('AK4PFPuppi', ['L2Relative', 'L3Absolute'], 'None')
 
 trigresults='TriggerResults::HLT'
+trigprescales='patTrigger'
 if options.runOnData: options.isReHLT=False
 if options.isReHLT: trigresults = trigresults+'2'
 
@@ -1604,6 +1632,8 @@ process.btagana.patMuonCollectionName = cms.InputTag(patMuons)
 process.btagana.use_ttbar_filter      = cms.bool(options.useTTbarFilter)
 #process.btagana.triggerTable          = cms.InputTag('TriggerResults::HLT') # Data and MC
 process.btagana.triggerTable          = cms.InputTag(trigresults) # Data and MC
+process.btagana.triggerPrescales      = cms.InputTag(trigprescales)
+process.btagana.TriggerSetup          = cms.string(triggerSetup)
 process.btagana.genParticles          = cms.InputTag(genParticles)
 process.btagana.candidates            = cms.InputTag(pfCandidates)
 process.btagana.runJetVariables     = options.runJetVariables

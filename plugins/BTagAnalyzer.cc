@@ -135,6 +135,7 @@
 #include "RecoBTag/SecondaryVertex/interface/CombinedSVSoftLeptonComputer.h"
 
 #include "TopQuarkAnalysis/BFragmentationAnalyzer/interface/BFragmentationAnalyzerUtils.h"
+#include "RecoBTag/PerformanceMeasurements/interface/FragTriggerSelection.h"
 
 //
 // constants, enums and typedefs
@@ -443,7 +444,9 @@ private:
   edm::EDGetTokenT<ClusterTPAssociation> clusterTPMapToken_;
 
   // trigger list
+  std::string triggerSetup_;
   std::vector<std::string> triggerPathNames_;
+  FragTriggerSelection fragTriggerSelection_;
 
   //rho
   edm::EDGetTokenT<double> rhoTag_;
@@ -527,6 +530,7 @@ private:
 
 template<typename IPTI,typename VTX>
 BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
+  fragTriggerSelection_(iConfig, consumesCollector()) ,
   classifier_(iConfig, consumesCollector()) ,
   pv(0),
   PFJet80(0),
@@ -744,7 +748,8 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   CvsLNegCJetTags_             = iConfig.getParameter<std::string>("CvsLNegCJetTags");
   CvsLPosCJetTags_             = iConfig.getParameter<std::string>("CvsLPosCJetTags");
 
-  triggerPathNames_        = iConfig.getParameter<std::vector<std::string> >("TriggerPathNames");
+  triggerSetup_            = iConfig.getParameter<std::string>("TriggerSetup");
+  triggerPathNames_        = iConfig.getParameter<std::vector<std::string> >(triggerSetup_);
   PFJet80TriggerPathNames_ = iConfig.getParameter<std::vector<std::string> >("PFJet80TriggerPathNames");
 
   putoken = consumes<std::vector<PileupSummaryInfo>>(edm::InputTag("addPileupInfo"));
@@ -875,6 +880,129 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
   using namespace edm;
   using namespace std;
   using namespace reco;
+  // Fragmentation Trigger Stuff
+  if(runFragmentationVariables_)
+  {
+    fragTriggerSelection_.LoadTriggers(iEvent, iSetup);
+    if(!fragTriggerSelection_.IsTriggered()) return;
+
+    // fill trigger branches
+    for(unsigned int i = 0; i < triggerPathNames_.size(); ++i)
+    {
+        std::string branchName  = fragTriggerSelection_.GetBranchName(triggerPathNames_.at(i));
+        std::string triggerName = fragTriggerSelection_.GetTriggerName(triggerPathNames_.at(i));
+        int val = -1;
+        int scale = 0;
+        if(!triggerName.empty())
+        {
+            val = fragTriggerSelection_.GetTriggerValue(triggerName);
+            scale = fragTriggerSelection_.GetPrescaleValue(triggerName);
+        }
+
+        if(branchName=="HLT_BTagMu_DiJet20_Mu5_vX") {
+            EventInfo.HLT_BTagMu_DiJet20_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_DiJet20_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_DiJet40_Mu5_vX") {
+            EventInfo.HLT_BTagMu_DiJet40_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_DiJet40_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_DiJet70_Mu5_vX") {
+            EventInfo.HLT_BTagMu_DiJet70_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_DiJet70_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_DiJet110_Mu5_vX") {
+            EventInfo.HLT_BTagMu_DiJet110_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_DiJet110_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_DiJet170_Mu5_vX") {
+            EventInfo.HLT_BTagMu_DiJet170_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_DiJet170_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_Jet300_Mu5_vX") {
+            EventInfo.HLT_BTagMu_Jet300_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_Jet300_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK4DiJet20_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK4DiJet20_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK4DiJet20_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK4DiJet40_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK4DiJet40_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK4DiJet40_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK4DiJet70_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK4DiJet70_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK4DiJet70_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK4DiJet110_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK4DiJet110_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK4DiJet110_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK4DiJet170_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK4DiJet170_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK4DiJet170_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK4Jet300_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK4Jet300_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK4Jet300_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK8DiJet170_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK8DiJet170_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK8DiJet170_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_BTagMu_AK8Jet300_Mu5_vX") {
+            EventInfo.HLT_BTagMu_AK8Jet300_Mu5_vX = val;
+            EventInfo.HLT_BTagMu_AK8Jet300_Mu5_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX") {
+            EventInfo.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX = val;
+            EventInfo.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX") {
+            EventInfo.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX = val;
+            EventInfo.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX") {
+            EventInfo.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX = val;
+            EventInfo.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX") {
+            EventInfo.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX = val;
+            EventInfo.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX") {
+            EventInfo.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX = val;
+            EventInfo.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX") {
+            EventInfo.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX = val;
+            EventInfo.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX") {
+            EventInfo.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX = val;
+            EventInfo.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX") {
+            EventInfo.HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX = val;
+            EventInfo.HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX") {
+            EventInfo.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX = val;
+            EventInfo.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX") {
+            EventInfo.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX = val;
+            EventInfo.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale = scale;
+        }
+        if(branchName=="HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX") {
+            EventInfo.HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX = val;
+            EventInfo.HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_vX_prescale = scale;
+        }
+    }
+  }
+
+
   //------------------------------------------------------
   // Event information
   //------------------------------------------------------

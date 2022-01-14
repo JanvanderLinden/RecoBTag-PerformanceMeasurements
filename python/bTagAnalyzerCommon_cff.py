@@ -133,5 +133,38 @@ bTagAnalyzerCommon = cms.PSet(
         "HLT_Mu17_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v*",                                      # muon + electron case1
         "HLT_Mu8_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v*"                                       # muon + electron case2
         ),
-    PFJet80TriggerPathNames = cms.vstring("HLT_PFJet80_v*")
+    PFJet80TriggerPathNames = cms.vstring("HLT_PFJet80_v*"),
+    FragQCDTriggerPathNames = cms.vstring(
+        "HLT_BTagMu_DiJet20_Mu5_v*",
+        "HLT_BTagMu_DiJet40_Mu5_v*",
+        "HLT_BTagMu_DiJet70_Mu5_v*",
+        "HLT_BTagMu_DiJet110_Mu5_v*",
+        "HLT_BTagMu_DiJet170_Mu5_v*",
+        "HLT_BTagMu_Jet300_Mu5_v*",
+        "HLT_BTagMu_AK4DiJet20_Mu5_v*",
+        "HLT_BTagMu_AK4DiJet40_Mu5_v*",
+        "HLT_BTagMu_AK4DiJet70_Mu5_v*",
+        "HLT_BTagMu_AK4DiJet110_Mu5_v*",
+        "HLT_BTagMu_AK4DiJet170_Mu5_v*",
+        "HLT_BTagMu_AK4Jet300_Mu5_v*",
+        "HLT_BTagMu_AK8DiJet170_Mu5_v*",
+        "HLT_BTagMu_AK8Jet300_Mu5_v*",
+        ),
+    FragTTbarTriggerPathNames = cms.vstring(
+        # https://twiki.cern.ch/twiki/bin/view/CMS/TopTriggerYear2017
+        # double mu
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v*",
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v*",
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v*",
+        # double e
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*",
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v*",
+        # muon and electron
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v*",
+        "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v*",
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v*",
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*",
+        "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v*",
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v*",
+        )
 )

@@ -27,7 +27,7 @@ RecoBTag/PerformanceMeasurements/test/runBTagAnalyzer_cfg.py
 
 To get the fragmentation weights and variables, for example run
 ```
-cmsRun runBTagAnalyzer_cfg.py defaults=2016_UltraLegacy_APV maxEvents=500 reportEvery=1 groups="EventInfo,Fragmentation,Quarks,Hadrons,PV,JetInfo,JetDeepFlavour,JetDeepCSV,JetSV"
+cmsRun runBTagAnalyzer_cfg.py defaults=2016_UltraLegacy_APV maxEvents=2000 reportEvery=100 groups="EventInfo,Fragmentation,Hadrons,JetFragInfo,JetDeepFlavour,JetDeepCSV,JetSV" fragTriggerSet=TTbar
 ```
 
 NOTE1: due to the structure of the preliminary JECs, there are 2 different "defaults" sets; 

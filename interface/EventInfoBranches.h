@@ -165,6 +165,7 @@ class EventInfoBranches {
     float GenJet_leadHadron_Pt[nGenJet_];
     float GenJet_leadHadron_xb[nGenJet_];
     int GenJet_leadHadron_ID[nGenJet_];
+    int GenJet_leadHadron_SL[nGenJet_];
     int GenJet_leadHadron_isB[nGenJet_];
     int GenJet_leadHadron_isC[nGenJet_];
 
@@ -390,6 +391,7 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("GenJet_leadHadron_Pt")) tree->Branch("GenJet_leadHadron_Pt", GenJet_leadHadron_Pt, "GenJet_leadHadron_Pt[nGenJet]/F");
       if(variableParser.isToBeStored("GenJet_leadHadron_xb")) tree->Branch("GenJet_leadHadron_xb", GenJet_leadHadron_xb, "GenJet_leadHadron_xb[nGenJet]/F");
       if(variableParser.isToBeStored("GenJet_leadHadron_ID")) tree->Branch("GenJet_leadHadron_ID", GenJet_leadHadron_ID, "GenJet_leadHadron_ID[nGenJet]/I");
+      if(variableParser.isToBeStored("GenJet_leadHadron_SL")) tree->Branch("GenJet_leadHadron_SL", GenJet_leadHadron_SL, "GenJet_leadHadron_SL[nGenJet]/I");
       if(variableParser.isToBeStored("GenJet_leadHadron_isB")) tree->Branch("GenJet_leadHadron_isB", GenJet_leadHadron_isB, "GenJet_leadHadron_isB[nGenJet]/I");
       if(variableParser.isToBeStored("GenJet_leadHadron_isC")) tree->Branch("GenJet_leadHadron_isC", GenJet_leadHadron_isC, "GenJet_leadHadron_isC[nGenJet]/I");
      
@@ -652,6 +654,7 @@ class EventInfoBranches {
       if(variableParser.isToBeStored("GenJet_leadHadron_Pt")) tree->SetBranchAddress("GenJet_leadHadron_Pt", GenJet_leadHadron_Pt);
       if(variableParser.isToBeStored("GenJet_leadHadron_xb")) tree->SetBranchAddress("GenJet_leadHadron_xb", GenJet_leadHadron_xb);
       if(variableParser.isToBeStored("GenJet_leadHadron_ID")) tree->SetBranchAddress("GenJet_leadHadron_ID", GenJet_leadHadron_ID);
+      if(variableParser.isToBeStored("GenJet_leadHadron_SL")) tree->SetBranchAddress("GenJet_leadHadron_SL", GenJet_leadHadron_SL);
       if(variableParser.isToBeStored("GenJet_leadHadron_isB")) tree->SetBranchAddress("GenJet_leadHadron_isB", GenJet_leadHadron_isB);
       if(variableParser.isToBeStored("GenJet_leadHadron_isC")) tree->SetBranchAddress("GenJet_leadHadron_isC", GenJet_leadHadron_isC);
 

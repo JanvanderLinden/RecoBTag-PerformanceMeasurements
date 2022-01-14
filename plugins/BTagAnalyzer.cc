@@ -309,6 +309,7 @@ private:
   edm::EDGetTokenT<edm::ValueMap<float> > leadHadronPtToken_;
   edm::EDGetTokenT<edm::ValueMap<float> > leadHadronxbToken_;
   edm::EDGetTokenT<edm::ValueMap<float> > leadHadronPDGIDToken_;
+  edm::EDGetTokenT<edm::ValueMap<float> > leadHadronSLdecayToken_;
 
   std::vector<std::string> bFragSyst;
   std::vector<std::string> leadHadFeat;
@@ -772,6 +773,7 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   leadHadFeat.push_back("leadHadronPt");
   leadHadFeat.push_back("leadHadronxb");
   leadHadFeat.push_back("leadHadronPDGID");
+  leadHadFeat.push_back("leadHadronSLdecay");
 
   genJetsToken_ = consumes<std::vector<reco::GenJet> >(
      iConfig.getParameter<edm::InputTag>("particleLevelJets"));
@@ -800,6 +802,8 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
       edm::InputTag("bfragWgtProducer","leadHadronxb"));   
   leadHadronPDGIDToken_  = consumes<edm::ValueMap<float> >(
       edm::InputTag("bfragWgtProducer","leadHadronPDGID"));   
+  leadHadronSLdecayToken_  = consumes<edm::ValueMap<float> >(
+      edm::InputTag("bfragWgtProducer","leadHadronSLdecay"));   
 
 
   ///////////////
@@ -1136,6 +1140,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
     edm::Handle<edm::ValueMap<float> > leadHadronPt;
     edm::Handle<edm::ValueMap<float> > leadHadronxb;
     edm::Handle<edm::ValueMap<float> > leadHadronPDGID;
+    edm::Handle<edm::ValueMap<float> > leadHadronSLdecay;
 
     iEvent.getByToken(genJetsToken_, genJets);
     iEvent.getByToken(fragCP5BLToken_,           fragCP5BL);
@@ -1150,6 +1155,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
     iEvent.getByToken(leadHadronPtToken_,    leadHadronPt);
     iEvent.getByToken(leadHadronxbToken_,    leadHadronxb);
     iEvent.getByToken(leadHadronPDGIDToken_, leadHadronPDGID);
+    iEvent.getByToken(leadHadronSLdecayToken_, leadHadronSLdecay);
 
     EventInfo.nGenJet = 0;
     // loop over gen jets
@@ -1175,6 +1181,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
         EventInfo.GenJet_leadHadron_Pt[EventInfo.nGenJet] = (*leadHadronPt)[genJetRef];
         EventInfo.GenJet_leadHadron_xb[EventInfo.nGenJet] = (*leadHadronxb)[genJetRef];
         EventInfo.GenJet_leadHadron_ID[EventInfo.nGenJet] = (*leadHadronPDGID)[genJetRef];
+        EventInfo.GenJet_leadHadron_SL[EventInfo.nGenJet] = (*leadHadronSLdecay)[genJetRef];
 
         EventInfo.GenJet_leadHadron_isB[EventInfo.nGenJet] = 0;
         EventInfo.GenJet_leadHadron_isC[EventInfo.nGenJet] = 0;
@@ -2220,11 +2227,13 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
         edm::Handle<edm::ValueMap<float> > leadHadronPt;
         edm::Handle<edm::ValueMap<float> > leadHadronxb;
         edm::Handle<edm::ValueMap<float> > leadHadronPDGID;
+        edm::Handle<edm::ValueMap<float> > leadHadronSLdecay;
 
         iEvent.getByToken(genJetsToken_, genJets);
         iEvent.getByToken(leadHadronPtToken_,    leadHadronPt);
         iEvent.getByToken(leadHadronxbToken_,    leadHadronxb);
         iEvent.getByToken(leadHadronPDGIDToken_, leadHadronPDGID);
+        iEvent.getByToken(leadHadronSLdecayToken_, leadHadronSLdecay);
 
         int foundGenJet = 0;
         for (auto gj = genJets->begin(); gj!=genJets->end(); ++gj)
@@ -2243,6 +2252,7 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
                 JetInfo[iJetColl].Jet_GenJet_leadHadron_Pt[JetInfo[iJetColl].nJet] = (*leadHadronPt)[genJetRef];
                 JetInfo[iJetColl].Jet_GenJet_leadHadron_xb[JetInfo[iJetColl].nJet] = (*leadHadronxb)[genJetRef];
                 JetInfo[iJetColl].Jet_GenJet_leadHadron_ID[JetInfo[iJetColl].nJet] = (*leadHadronPDGID)[genJetRef];
+                JetInfo[iJetColl].Jet_GenJet_leadHadron_SL[JetInfo[iJetColl].nJet] = (*leadHadronSLdecay)[genJetRef];
                 JetInfo[iJetColl].Jet_GenJet_leadHadron_isB[JetInfo[iJetColl].nJet] = 0;
                 JetInfo[iJetColl].Jet_GenJet_leadHadron_isC[JetInfo[iJetColl].nJet] = 0;
                 if(IS_BHADRON_PDGID((int)(*leadHadronPDGID)[genJetRef]))
@@ -2265,6 +2275,7 @@ void BTagAnalyzerT<IPTI,VTX>::processJets(const edm::Handle<PatJetCollection>& j
             JetInfo[iJetColl].Jet_GenJet_leadHadron_Pt[JetInfo[iJetColl].nJet] = -1;
             JetInfo[iJetColl].Jet_GenJet_leadHadron_xb[JetInfo[iJetColl].nJet] = -1;
             JetInfo[iJetColl].Jet_GenJet_leadHadron_ID[JetInfo[iJetColl].nJet] = -1;
+            JetInfo[iJetColl].Jet_GenJet_leadHadron_SL[JetInfo[iJetColl].nJet] = -1;
             JetInfo[iJetColl].Jet_GenJet_leadHadron_isB[JetInfo[iJetColl].nJet] = -1;
             JetInfo[iJetColl].Jet_GenJet_leadHadron_isC[JetInfo[iJetColl].nJet] = -1;
         }
